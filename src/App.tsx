@@ -70,7 +70,6 @@ function App() {
           missions={DAILY_MISSIONS}
           getMissionValue={getMissionValue}
           updateMission={updateMission}
-          guildSize={guildSize}
         />
 
 

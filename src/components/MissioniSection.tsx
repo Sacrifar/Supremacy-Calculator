@@ -6,14 +6,12 @@ interface MissioniSectionProps {
     missions: Mission[];
     getMissionValue: (missionId: string) => number;
     updateMission: (missionId: string, value: number) => void;
-    guildSize: number;
 }
 
 export function MissioniSection({
     missions,
     getMissionValue,
     updateMission,
-    guildSize,
 }: MissioniSectionProps) {
     const calculateTotal = (): number => {
         return missions.reduce((total, mission) => {
