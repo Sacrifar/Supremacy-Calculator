@@ -1,4 +1,4 @@
-import { GameMode } from '../types';
+import type { GameMode } from '../types';
 import { InputCounter } from './InputCounter';
 import './ClassificheSection.css';
 

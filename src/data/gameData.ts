@@ -1,5 +1,5 @@
 // Game data constants for Supremacy Calculator
-import { GameMode, Mission } from '../types';
+import type { GameMode, Mission } from '../types';
 
 export const DAILY_MODES: GameMode[] = [
     {
