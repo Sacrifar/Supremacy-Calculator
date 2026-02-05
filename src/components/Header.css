@@ -122,6 +122,73 @@
   color: #ffe66d;
 }
 
+.current-points-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 16px 20px;
+  background: rgba(212, 175, 55, 0.08);
+  border-radius: 12px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.current-points-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.current-points-input {
+  width: 140px;
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 8px;
+  color: #d4af37;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.current-points-input:focus {
+  outline: none;
+  border-color: #d4af37;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
+}
+
+.current-points-input::-webkit-outer-spin-button,
+.current-points-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.current-points-input {
+  -moz-appearance: textfield;
+}
+
+.calculated-points {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.calculated-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.calculated-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #4ecdc4;
+}
+
 @media (max-width: 600px) {
   .header-content {
     flex-direction: column;
@@ -134,5 +201,10 @@
 
   .total-section {
     width: 100%;
+  }
+
+  .current-points-section {
+    flex-direction: column;
+    text-align: center;
   }
 }

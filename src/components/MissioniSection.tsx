@@ -53,7 +53,7 @@ export function MissioniSection({
                                 <InputCounter
                                     value={completed}
                                     onChange={(value) => updateMission(mission.id, value)}
-                                    max={guildSize}
+                                    max={mission.maxMembers}
                                     label="Membri"
                                 />
                             </div>

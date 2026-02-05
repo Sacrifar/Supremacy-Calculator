@@ -1,0 +1,240 @@
+.glifoscuro-section {
+    margin-bottom: 32px;
+    --accent-color: #9b59b6;
+}
+
+.glifoscuro-section .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.glifoscuro-section .section-title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.glifoscuro-section .section-title::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 24px;
+    background: var(--accent-color);
+    border-radius: 2px;
+}
+
+.glifoscuro-section .section-subtitle {
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.glifoscuro-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.unlock-status-card {
+    background: linear-gradient(145deg, rgba(155, 89, 182, 0.15) 0%, rgba(155, 89, 182, 0.05) 100%);
+    border: 1px solid rgba(155, 89, 182, 0.3);
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.unlock-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.current-unlock {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.unlock-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.unlock-value {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--accent-color);
+    line-height: 1;
+}
+
+.points-display {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.points-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.points-value {
+    font-size: 28px;
+    font-weight: 600;
+    color: #f1c40f;
+}
+
+.next-unlock {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.points-needed {
+    color: #e74c3c;
+}
+
+.progress-bar {
+    height: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #9b59b6, #8e44ad);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.progress-target {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: right;
+}
+
+.max-unlocked {
+    background: rgba(46, 204, 113, 0.2);
+    border: 1px solid rgba(46, 204, 113, 0.4);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    font-size: 16px;
+    color: #2ecc71;
+    font-weight: 600;
+}
+
+.difficulties-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
+}
+
+.difficulty-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 8px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.2s ease;
+}
+
+.difficulty-card.unlocked {
+    background: linear-gradient(145deg, rgba(46, 204, 113, 0.15) 0%, rgba(46, 204, 113, 0.05) 100%);
+    border-color: rgba(46, 204, 113, 0.4);
+}
+
+.difficulty-card.current {
+    background: linear-gradient(145deg, rgba(155, 89, 182, 0.25) 0%, rgba(155, 89, 182, 0.1) 100%);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 20px rgba(155, 89, 182, 0.3);
+}
+
+.difficulty-card.next {
+    border-color: rgba(241, 196, 15, 0.5);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(241, 196, 15, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 0 10px 2px rgba(241, 196, 15, 0.2);
+    }
+}
+
+.difficulty-card.locked {
+    opacity: 0.5;
+}
+
+.difficulty-number {
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+}
+
+.difficulty-req {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 2px;
+}
+
+.check-icon {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    font-size: 10px;
+    color: #2ecc71;
+}
+
+@media (max-width: 720px) {
+    .unlock-header {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    .points-display {
+        text-align: left;
+    }
+
+    .progress-info {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
+
+    .difficulties-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}

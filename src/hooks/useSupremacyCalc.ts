@@ -9,12 +9,14 @@ interface StoredData {
     guildSize: number;
     rankings: GuildRankData[];
     missions: MissionData[];
+    currentPoints: number;
 }
 
 export function useSupremacyCalc() {
     const [guildSize, setGuildSize] = useState(20);
     const [rankings, setRankings] = useState<GuildRankData[]>([]);
     const [missions, setMissions] = useState<MissionData[]>([]);
+    const [currentPoints, setCurrentPoints] = useState(0);
 
     // Initialize data
     useEffect(() => {
@@ -25,6 +27,7 @@ export function useSupremacyCalc() {
                 setGuildSize(data.guildSize || 20);
                 setRankings(data.rankings || []);
                 setMissions(data.missions || []);
+                setCurrentPoints(data.currentPoints || 0);
             } catch {
                 initializeDefaults();
             }
@@ -53,15 +56,16 @@ export function useSupremacyCalc() {
             completedMembers: 0,
         }));
         setMissions(defaultMissions);
+        setCurrentPoints(0);
     };
 
     // Save to localStorage
     useEffect(() => {
         if (rankings.length > 0) {
-            const data: StoredData = { guildSize, rankings, missions };
+            const data: StoredData = { guildSize, rankings, missions, currentPoints };
             localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
         }
-    }, [guildSize, rankings, missions]);
+    }, [guildSize, rankings, missions, currentPoints]);
 
     const updateRanking = useCallback(
         (modeId: string, tierIndex: number, memberCount: number) => {
@@ -149,6 +153,8 @@ export function useSupremacyCalc() {
     return {
         guildSize,
         setGuildSize,
+        currentPoints,
+        setCurrentPoints,
         rankings,
         missions,
         updateRanking,

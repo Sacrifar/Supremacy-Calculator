@@ -2,6 +2,7 @@ import { useSupremacyCalc } from './hooks/useSupremacyCalc';
 import { Header } from './components/Header';
 import { ClassificheSection } from './components/ClassificheSection';
 import { MissioniSection } from './components/MissioniSection';
+import { GlifoscuroSection } from './components/GlifoscuroSection';
 import { DAILY_MODES, WEEKLY_MODES, DAILY_MISSIONS } from './data/gameData';
 import './App.css';
 
@@ -9,6 +10,8 @@ function App() {
   const {
     guildSize,
     setGuildSize,
+    currentPoints,
+    setCurrentPoints,
     updateRanking,
     updateMission,
     getRankingValue,
@@ -22,7 +25,12 @@ function App() {
   return (
     <div className="app">
       <div className="app-container">
-        <Header points={points} onReset={resetAll} />
+        <Header
+          points={points}
+          currentPoints={currentPoints}
+          setCurrentPoints={setCurrentPoints}
+          onReset={resetAll}
+        />
 
         <div className="guild-size-section">
           <label className="guild-size-label">
@@ -62,6 +70,8 @@ function App() {
           updateMission={updateMission}
           guildSize={guildSize}
         />
+
+        <GlifoscuroSection projectedPoints={currentPoints + points.total} />
 
         <footer className="app-footer">
           <p>Supremacy Calculator • I dati vengono salvati automaticamente nel browser</p>
