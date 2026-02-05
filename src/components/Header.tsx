@@ -1,4 +1,4 @@
-import { PointsSummary } from '../types';
+import type { PointsSummary } from '../types';
 import './Header.css';
 
 interface HeaderProps {

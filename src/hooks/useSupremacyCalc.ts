@@ -1,6 +1,6 @@
 // Custom hook for Supremacy Calculator logic
 import { useState, useCallback, useEffect } from 'react';
-import { GuildRankData, MissionData, PointsSummary } from '../types';
+import type { GuildRankData, MissionData, PointsSummary } from '../types';
 import { ALL_MODES, DAILY_MODES, WEEKLY_MODES, DAILY_MISSIONS } from '../data/gameData';
 
 const STORAGE_KEY = 'supremacy-calculator-data';
