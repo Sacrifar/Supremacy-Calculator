@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .input-counter {
     display: flex;
     align-items: center;
@@ -77,4 +78,85 @@
     font-size: 11px;
     color: rgba(255, 255, 255, 0.4);
     min-width: 45px;
+=======
+.input-counter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.counter-label {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+    min-width: 60px;
+}
+
+.counter-controls {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+.counter-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.counter-btn:hover:not(:disabled) {
+    background: rgba(212, 175, 55, 0.3);
+    color: #d4af37;
+}
+
+.counter-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.counter-btn.decrement {
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.counter-btn.increment {
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.counter-input {
+    width: 50px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    color: #d4af37;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    -moz-appearance: textfield;
+}
+
+.counter-input::-webkit-outer-spin-button,
+.counter-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.counter-input:focus {
+    outline: none;
+}
+
+.counter-max {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+    min-width: 45px;
+>>>>>>> 63bda0097aa53704e45ece885226d943243d993e
 }
