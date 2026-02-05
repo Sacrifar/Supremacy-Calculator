@@ -18,12 +18,12 @@ export function Header({ points, currentPoints, setCurrentPoints, onReset }: Hea
                     <div className="logo-icon">⚔️</div>
                     <div className="logo-text">
                         <h1>Supremacy Calculator</h1>
-                        <p>Calcola i punti della tua gilda</p>
+                        <p>Calculate your guild points</p>
                     </div>
                 </div>
 
                 <div className="total-section">
-                    <div className="total-label">Punti Proiettati</div>
+                    <div className="total-label">Projected Points</div>
                     <div className="total-value">{projectedTotal.toLocaleString()}</div>
                     <button className="reset-btn" onClick={onReset}>
                         🔄 Reset
@@ -33,7 +33,7 @@ export function Header({ points, currentPoints, setCurrentPoints, onReset }: Hea
 
             <div className="current-points-section">
                 <label className="current-points-label">
-                    <span>Punti Attuali:</span>
+                    <span>Current Points:</span>
                     <input
                         type="number"
                         className="current-points-input"
@@ -43,22 +43,22 @@ export function Header({ points, currentPoints, setCurrentPoints, onReset }: Hea
                     />
                 </label>
                 <div className="calculated-points">
-                    <span className="calculated-label">Punti Calcolati:</span>
+                    <span className="calculated-label">Calculated Points:</span>
                     <span className="calculated-value">+{points.total.toLocaleString()}</span>
                 </div>
             </div>
 
             <div className="points-breakdown">
                 <div className="breakdown-item">
-                    <span className="breakdown-label">Classifiche Giornaliere</span>
+                    <span className="breakdown-label">Daily Rankings</span>
                     <span className="breakdown-value daily">{points.dailyRankings.toLocaleString()}</span>
                 </div>
                 <div className="breakdown-item">
-                    <span className="breakdown-label">Classifiche Settimanali</span>
+                    <span className="breakdown-label">Weekly Rankings</span>
                     <span className="breakdown-value weekly">{points.weeklyRankings.toLocaleString()}</span>
                 </div>
                 <div className="breakdown-item">
-                    <span className="breakdown-label">Missioni Giornaliere</span>
+                    <span className="breakdown-label">Daily Missions</span>
                     <span className="breakdown-value missions">{points.dailyMissions.toLocaleString()}</span>
                 </div>
             </div>

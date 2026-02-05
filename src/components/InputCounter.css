@@ -14,18 +14,18 @@
     display: flex;
     align-items: center;
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
+    border-radius: 6px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     overflow: hidden;
 }
 
 .counter-btn {
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     border: none;
     background: transparent;
     color: white;
-    font-size: 18px;
+    font-size: 14px;
     cursor: pointer;
     transition: all 0.2s ease;
     display: flex;
@@ -33,31 +33,15 @@
     justify-content: center;
 }
 
-.counter-btn:hover:not(:disabled) {
-    background: rgba(212, 175, 55, 0.3);
-    color: #d4af37;
-}
-
-.counter-btn:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-}
-
-.counter-btn.decrement {
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.counter-btn.increment {
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
-}
+/* ... existing styles ... */
 
 .counter-input {
-    width: 50px;
-    height: 32px;
+    width: 40px;
+    height: 24px;
     border: none;
     background: transparent;
     color: #d4af37;
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 600;
     text-align: center;
     -moz-appearance: textfield;

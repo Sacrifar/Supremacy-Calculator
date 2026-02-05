@@ -25,12 +25,12 @@ export function MissioniSection({
         <section className="missioni-section">
             <div className="section-header">
                 <div>
-                    <h2 className="section-title">Missioni Giornaliere</h2>
-                    <p className="section-subtitle">Punti per membro che completa la missione</p>
+                    <h2 className="section-title">Daily Missions</h2>
+                    <p className="section-subtitle">Points per member completing the mission</p>
                 </div>
                 <div className="section-total">
                     <span className="section-total-value">{calculateTotal().toLocaleString()}</span>
-                    <span className="section-total-label">punti totali</span>
+                    <span className="section-total-label">total points</span>
                 </div>
             </div>
 
@@ -45,7 +45,7 @@ export function MissioniSection({
                                 <h3 className="mission-name">{mission.name}</h3>
                                 <div className="mission-points">
                                     <span className="points-per-member">+{mission.points}</span>
-                                    <span className="points-label">pts/membro</span>
+                                    <span className="points-label">pts/member</span>
                                 </div>
                             </div>
 
@@ -54,13 +54,13 @@ export function MissioniSection({
                                     value={completed}
                                     onChange={(value) => updateMission(mission.id, value)}
                                     max={mission.maxMembers}
-                                    label="Membri"
+                                    label="Members"
                                 />
                             </div>
 
                             <div className="mission-total">
                                 <span className="mission-total-value">{missionTotal.toLocaleString()}</span>
-                                <span className="mission-total-label">punti</span>
+                                <span className="mission-total-label">points</span>
                             </div>
                         </div>
                     );

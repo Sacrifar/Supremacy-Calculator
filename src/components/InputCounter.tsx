@@ -4,10 +4,13 @@ interface InputCounterProps {
     value: number;
     onChange: (value: number) => void;
     max: number;
+    limit?: number;
     label?: string;
 }
 
-export function InputCounter({ value, onChange, max, label }: InputCounterProps) {
+export function InputCounter({ value, onChange, max, limit, label }: InputCounterProps) {
+    const effectiveLimit = limit !== undefined ? limit : max;
+
     const handleDecrement = () => {
         if (value > 0) {
             onChange(value - 1);
@@ -15,14 +18,14 @@ export function InputCounter({ value, onChange, max, label }: InputCounterProps)
     };
 
     const handleIncrement = () => {
-        if (value < max) {
+        if (value < effectiveLimit) {
             onChange(value + 1);
         }
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = parseInt(e.target.value) || 0;
-        onChange(Math.min(Math.max(0, newValue), max));
+        onChange(Math.min(Math.max(0, newValue), effectiveLimit));
     };
 
     return (
@@ -42,12 +45,12 @@ export function InputCounter({ value, onChange, max, label }: InputCounterProps)
                     value={value}
                     onChange={handleInputChange}
                     min={0}
-                    max={max}
+                    max={effectiveLimit}
                 />
                 <button
                     className="counter-btn increment"
                     onClick={handleIncrement}
-                    disabled={value >= max}
+                    disabled={value >= effectiveLimit}
                 >
                     +
                 </button>

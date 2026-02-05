@@ -1,57 +1,57 @@
 .missioni-section {
-    margin-bottom: 32px;
+    margin-bottom: 20px;
 }
 
 .missioni-section .section-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
 }
 
 .missioni-section .section-title {
     margin: 0;
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 700;
     color: #ffe66d;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 
 .missioni-section .section-title::before {
     content: '';
     display: inline-block;
     width: 4px;
-    height: 24px;
+    height: 20px;
     background: #ffe66d;
     border-radius: 2px;
 }
 
 .missioni-section .section-subtitle {
-    margin: 4px 0 0;
-    font-size: 13px;
+    margin: 2px 0 0;
+    font-size: 11px;
     color: rgba(255, 255, 255, 0.5);
 }
 
 .section-total {
     text-align: right;
-    padding: 12px 20px;
+    padding: 8px 12px;
     background: rgba(255, 230, 109, 0.1);
-    border-radius: 12px;
+    border-radius: 8px;
     border: 1px solid rgba(255, 230, 109, 0.3);
 }
 
 .section-total-value {
     display: block;
-    font-size: 28px;
+    font-size: 20px;
     font-weight: 700;
     color: #ffe66d;
     line-height: 1;
 }
 
 .section-total-label {
-    font-size: 11px;
+    font-size: 9px;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: rgba(255, 230, 109, 0.7);
@@ -59,25 +59,22 @@
 
 .missions-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
 }
 
 .mission-card {
     background: linear-gradient(145deg, rgba(255, 230, 109, 0.08) 0%, rgba(255, 230, 109, 0.02) 100%);
     border: 1px solid rgba(255, 230, 109, 0.15);
     border-radius: 12px;
-    padding: 16px;
+    padding: 12px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
     transition: all 0.3s ease;
 }
 
-.mission-card:hover {
-    border-color: rgba(255, 230, 109, 0.4);
-    box-shadow: 0 4px 20px rgba(255, 230, 109, 0.1);
-}
+/* ... existing styles ... */
 
 .mission-info {
     display: flex;
@@ -87,7 +84,7 @@
 
 .mission-name {
     margin: 0;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     color: white;
 }
@@ -98,19 +95,19 @@
 
 .points-per-member {
     display: block;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
     color: #ffe66d;
     line-height: 1;
 }
 
 .points-label {
-    font-size: 10px;
+    font-size: 9px;
     color: rgba(255, 255, 255, 0.5);
 }
 
 .mission-controls {
-    padding: 8px 0;
+    padding: 6px 0;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -119,19 +116,19 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 12px;
+    padding: 6px 10px;
     background: rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
+    border-radius: 6px;
 }
 
 .mission-total-value {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 700;
     color: #ffe66d;
 }
 
 .mission-total-label {
-    font-size: 12px;
+    font-size: 11px;
     color: rgba(255, 255, 255, 0.5);
 }
 

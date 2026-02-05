@@ -10,6 +10,7 @@ export interface GameMode {
   id: string;
   name: string;
   type: 'daily' | 'weekly';
+  maxPoints?: number;
   tiers: RankTier[];
 }
 

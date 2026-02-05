@@ -32,9 +32,11 @@ function App() {
           onReset={resetAll}
         />
 
+        <GlifoscuroSection projectedPoints={currentPoints + points.total} />
+
         <div className="guild-size-section">
           <label className="guild-size-label">
-            <span>Membri della Gilda:</span>
+            <span>Guild Members:</span>
             <input
               type="number"
               className="guild-size-input"
@@ -47,8 +49,8 @@ function App() {
         </div>
 
         <ClassificheSection
-          title="Classifiche Giornaliere"
-          subtitle="Punti assegnati ogni giorno in base alla posizione"
+          title="Daily Rankings"
+          subtitle="Points awarded daily based on rank"
           modes={DAILY_MODES}
           getRankingValue={getRankingValue}
           updateRanking={updateRanking}
@@ -56,8 +58,8 @@ function App() {
         />
 
         <ClassificheSection
-          title="Classifiche Settimanali"
-          subtitle="Punti assegnati settimanalmente in base alla posizione"
+          title="Weekly Rankings"
+          subtitle="Points awarded weekly based on rank"
           modes={WEEKLY_MODES}
           getRankingValue={getRankingValue}
           updateRanking={updateRanking}
@@ -71,10 +73,10 @@ function App() {
           guildSize={guildSize}
         />
 
-        <GlifoscuroSection projectedPoints={currentPoints + points.total} />
+
 
         <footer className="app-footer">
-          <p>Supremacy Calculator • I dati vengono salvati automaticamente nel browser</p>
+          <p>Supremacy Calculator • Data automatically saved in browser</p>
         </footer>
       </div>
     </div>

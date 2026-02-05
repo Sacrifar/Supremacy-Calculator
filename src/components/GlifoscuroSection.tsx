@@ -49,8 +49,8 @@ export function GlifoscuroSection({ projectedPoints }: GlifoscuroSectionProps) {
         <section className="glifoscuro-section">
             <div className="section-header">
                 <div>
-                    <h2 className="section-title">Requisiti Glifoscuro</h2>
-                    <p className="section-subtitle">Sblocca nuove difficoltà accumulando Pass Supremazia</p>
+                    <h2 className="section-title">Glyphshade Requirements</h2>
+                    <p className="section-subtitle">Unlock new difficulties by accumulating Supremacy Pass</p>
                 </div>
             </div>
 
@@ -58,11 +58,11 @@ export function GlifoscuroSection({ projectedPoints }: GlifoscuroSectionProps) {
                 <div className="unlock-status-card">
                     <div className="unlock-header">
                         <div className="current-unlock">
-                            <span className="unlock-label">Difficoltà Sbloccata</span>
+                            <span className="unlock-label">Difficulty Unlocked</span>
                             <span className="unlock-value">{unlockedDifficulty}</span>
                         </div>
                         <div className="points-display">
-                            <span className="points-label">Pass Supremazia</span>
+                            <span className="points-label">Supremacy Pass</span>
                             <span className="points-value">{projectedPoints.toLocaleString()}</span>
                         </div>
                     </div>
@@ -70,9 +70,9 @@ export function GlifoscuroSection({ projectedPoints }: GlifoscuroSectionProps) {
                     {nextUnlock && (
                         <div className="next-unlock">
                             <div className="progress-info">
-                                <span>Prossimo sblocco: <strong>Difficoltà {nextUnlock.difficulty}</strong></span>
+                                <span>Next unlock: <strong>Difficulty {nextUnlock.difficulty}</strong></span>
                                 <span className="points-needed">
-                                    Mancano <strong>{nextUnlock.pointsNeeded.toLocaleString()}</strong> punti
+                                    <strong>{nextUnlock.pointsNeeded.toLocaleString()}</strong> points needed
                                 </span>
                             </div>
                             <div className="progress-bar">
@@ -82,14 +82,14 @@ export function GlifoscuroSection({ projectedPoints }: GlifoscuroSectionProps) {
                                 />
                             </div>
                             <div className="progress-target">
-                                Obiettivo: {nextUnlock.requiredPoints.toLocaleString()} punti
+                                Goal: {nextUnlock.requiredPoints.toLocaleString()} points
                             </div>
                         </div>
                     )}
 
                     {!nextUnlock && (
                         <div className="max-unlocked">
-                            🎉 Hai sbloccato tutte le difficoltà!
+                            🎉 All difficulties unlocked!
                         </div>
                     )}
                 </div>
@@ -108,7 +108,7 @@ export function GlifoscuroSection({ projectedPoints }: GlifoscuroSectionProps) {
                                 <span className="difficulty-number">{req.difficulty}</span>
                                 <span className="difficulty-req">
                                     {req.requiredPoints === 0
-                                        ? 'Gratis'
+                                        ? 'Free'
                                         : req.requiredPoints.toLocaleString()}
                                 </span>
                                 {isUnlocked && <span className="check-icon">✓</span>}

@@ -7,12 +7,12 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
 }
 
 .glifoscuro-section .section-title {
     margin: 0;
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 700;
     color: var(--accent-color);
     display: flex;
@@ -44,32 +44,32 @@
 .unlock-status-card {
     background: linear-gradient(145deg, rgba(155, 89, 182, 0.15) 0%, rgba(155, 89, 182, 0.05) 100%);
     border: 1px solid rgba(155, 89, 182, 0.3);
-    border-radius: 16px;
-    padding: 24px;
+    border-radius: 12px;
+    padding: 16px;
 }
 
 .unlock-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
 }
 
 .current-unlock {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
 }
 
 .unlock-label {
-    font-size: 12px;
+    font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: rgba(255, 255, 255, 0.6);
 }
 
 .unlock-value {
-    font-size: 48px;
+    font-size: 32px;
     font-weight: 700;
     color: var(--accent-color);
     line-height: 1;
@@ -79,34 +79,34 @@
     text-align: right;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
 }
 
 .points-label {
-    font-size: 12px;
+    font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: rgba(255, 255, 255, 0.6);
 }
 
 .points-value {
-    font-size: 28px;
+    font-size: 20px;
     font-weight: 600;
     color: #f1c40f;
 }
 
 .next-unlock {
     background: rgba(0, 0, 0, 0.2);
-    border-radius: 12px;
-    padding: 16px;
+    border-radius: 8px;
+    padding: 12px;
 }
 
 .progress-info {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
-    font-size: 14px;
+    margin-bottom: 8px;
+    font-size: 13px;
     color: rgba(255, 255, 255, 0.8);
 }
 
@@ -115,22 +115,22 @@
 }
 
 .progress-bar {
-    height: 8px;
+    height: 6px;
     background: rgba(0, 0, 0, 0.3);
-    border-radius: 4px;
+    border-radius: 3px;
     overflow: hidden;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .progress-fill {
     height: 100%;
     background: linear-gradient(90deg, #9b59b6, #8e44ad);
-    border-radius: 4px;
+    border-radius: 3px;
     transition: width 0.3s ease;
 }
 
 .progress-target {
-    font-size: 12px;
+    font-size: 11px;
     color: rgba(255, 255, 255, 0.5);
     text-align: right;
 }
@@ -138,18 +138,18 @@
 .max-unlocked {
     background: rgba(46, 204, 113, 0.2);
     border: 1px solid rgba(46, 204, 113, 0.4);
-    border-radius: 12px;
-    padding: 16px;
+    border-radius: 8px;
+    padding: 12px;
     text-align: center;
-    font-size: 16px;
+    font-size: 14px;
     color: #2ecc71;
     font-weight: 600;
 }
 
 .difficulties-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 8px;
 }
 
 .difficulty-card {
@@ -158,53 +158,23 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 12px 8px;
-    border-radius: 12px;
+    padding: 8px 4px;
+    border-radius: 8px;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.2s ease;
 }
 
-.difficulty-card.unlocked {
-    background: linear-gradient(145deg, rgba(46, 204, 113, 0.15) 0%, rgba(46, 204, 113, 0.05) 100%);
-    border-color: rgba(46, 204, 113, 0.4);
-}
-
-.difficulty-card.current {
-    background: linear-gradient(145deg, rgba(155, 89, 182, 0.25) 0%, rgba(155, 89, 182, 0.1) 100%);
-    border-color: var(--accent-color);
-    box-shadow: 0 0 20px rgba(155, 89, 182, 0.3);
-}
-
-.difficulty-card.next {
-    border-color: rgba(241, 196, 15, 0.5);
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-
-    0%,
-    100% {
-        box-shadow: 0 0 0 0 rgba(241, 196, 15, 0.4);
-    }
-
-    50% {
-        box-shadow: 0 0 10px 2px rgba(241, 196, 15, 0.2);
-    }
-}
-
-.difficulty-card.locked {
-    opacity: 0.5;
-}
+/* ... existing styles ... */
 
 .difficulty-number {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 700;
     color: white;
 }
 
 .difficulty-req {
-    font-size: 10px;
+    font-size: 9px;
     color: rgba(255, 255, 255, 0.6);
     margin-top: 2px;
 }

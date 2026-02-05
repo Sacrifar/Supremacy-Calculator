@@ -1,70 +1,67 @@
 .classifiche-section {
-    margin-bottom: 32px;
+    margin-bottom: 20px;
 }
 
 .section-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
 }
 
 .section-title {
     margin: 0;
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 700;
     color: var(--accent-color);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 
 .section-title::before {
     content: '';
     display: inline-block;
     width: 4px;
-    height: 24px;
+    height: 20px;
     background: var(--accent-color);
     border-radius: 2px;
 }
 
 .section-subtitle {
-    margin: 4px 0 0;
-    font-size: 13px;
+    margin: 2px 0 0;
+    font-size: 11px;
     color: rgba(255, 255, 255, 0.5);
 }
 
 .modes-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 12px;
 }
 
 .mode-card {
     background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 20px;
+    border-radius: 12px;
+    padding: 12px;
     transition: all 0.3s ease;
 }
 
-.mode-card:hover {
-    border-color: var(--accent-color);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 1px var(--accent-color);
-}
+/* ... existing styles ... */
 
 .mode-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .mode-title {
     margin: 0;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     color: white;
 }
@@ -75,14 +72,14 @@
 
 .mode-total-value {
     display: block;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
     color: var(--accent-color);
     line-height: 1;
 }
 
 .mode-total-label {
-    font-size: 10px;
+    font-size: 9px;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: rgba(255, 255, 255, 0.5);
@@ -91,37 +88,35 @@
 .tiers-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
 }
 
 .tier-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 12px;
+    padding: 4px 8px;
     background: rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
+    border-radius: 6px;
     transition: background 0.2s ease;
 }
 
-.tier-row:hover {
-    background: rgba(0, 0, 0, 0.3);
-}
+/* ... existing styles ... */
 
 .tier-info {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 0;
 }
 
 .tier-position {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
     color: white;
 }
 
 .tier-points {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--accent-color);
     font-weight: 600;
 }
