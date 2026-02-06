@@ -2,6 +2,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import type { GuildRankData, MissionData, PointsSummary } from '../types';
 import { ALL_MODES, DAILY_MODES, WEEKLY_MODES, DAILY_MISSIONS } from '../data/gameData';
+import { calculateModePoints } from '../utils/calculations';
 
 const STORAGE_KEY = 'supremacy-calculator-data';
 
@@ -118,18 +119,16 @@ export function useSupremacyCalc() {
 
         // Calculate daily rankings
         DAILY_MODES.forEach((mode) => {
-            mode.tiers.forEach((tier, tierIndex) => {
-                const memberCount = getRankingValue(mode.id, tierIndex);
-                dailyRankings += memberCount * tier.points;
-            });
+            dailyRankings += calculateModePoints(mode, (tierIndex) =>
+                getRankingValue(mode.id, tierIndex)
+            );
         });
 
         // Calculate weekly rankings
         WEEKLY_MODES.forEach((mode) => {
-            mode.tiers.forEach((tier, tierIndex) => {
-                const memberCount = getRankingValue(mode.id, tierIndex);
-                weeklyRankings += memberCount * tier.points;
-            });
+            weeklyRankings += calculateModePoints(mode, (tierIndex) =>
+                getRankingValue(mode.id, tierIndex)
+            );
         });
 
         // Calculate daily missions

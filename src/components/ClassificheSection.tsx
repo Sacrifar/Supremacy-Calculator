@@ -1,5 +1,6 @@
 import type { GameMode } from '../types';
 import { InputCounter } from './InputCounter';
+import { calculateModePoints } from '../utils/calculations';
 import './ClassificheSection.css';
 
 interface ClassificheSectionProps {
@@ -20,40 +21,7 @@ export function ClassificheSection({
     accentColor,
 }: ClassificheSectionProps) {
     const calculateModeTotal = (mode: GameMode): number => {
-        // Calculate cumulative points for each tier (tier points + all lower tier points)
-        const cumulativePoints = mode.tiers.map((_, tierIndex) => {
-            return mode.tiers.slice(tierIndex).reduce((sum, t) => sum + t.points, 0);
-        });
-
-        // Get the raw input values for each tier
-        const rawValues = mode.tiers.map((_, index) => getRankingValue(mode.id, index));
-
-        // Apply overflow logic: excess members flow down to lower tiers
-        const effectiveMembers: number[] = [];
-        let overflow = 0;
-
-        for (let i = 0; i < mode.tiers.length; i++) {
-            const tier = mode.tiers[i];
-            const totalForTier = rawValues[i] + overflow;
-
-            if (totalForTier > tier.maxMembers) {
-                // This tier is over cap, take max and overflow the rest
-                effectiveMembers.push(tier.maxMembers);
-                overflow = totalForTier - tier.maxMembers;
-            } else {
-                // This tier fits within cap
-                effectiveMembers.push(totalForTier);
-                overflow = 0;
-            }
-        }
-        // Note: any remaining overflow after the last tier is lost (no lower tier to go to)
-
-        // Calculate total points using cumulative points and effective members
-        const totalPoints = effectiveMembers.reduce((total, members, index) => {
-            return total + members * cumulativePoints[index];
-        }, 0);
-
-        return mode.maxPoints ? Math.min(totalPoints, mode.maxPoints) : totalPoints;
+        return calculateModePoints(mode, (tierIndex) => getRankingValue(mode.id, tierIndex));
     };
 
     return (
