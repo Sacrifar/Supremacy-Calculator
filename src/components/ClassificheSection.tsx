@@ -38,6 +38,13 @@ export function ClassificheSection({
         });
     };
 
+    const isArenaClosed = (modeId: string): boolean => {
+        if (modeId !== 'arena-suprema') return false;
+        const now = new Date();
+        const day = now.getUTCDay();
+        return day === 1 || day === 2; // Monday or Tuesday
+    };
+
     return (
         <section className="classifiche-section" style={{ '--accent-color': accentColor } as React.CSSProperties}>
             <div className="section-header">
@@ -74,11 +81,19 @@ export function ClassificheSection({
                                 MAX
                             </button>
                             <div className="mode-total">
-                                <span className="mode-total-value">
-                                    {calculateModeTotal(mode).toLocaleString()}
-                                    {mode.maxPoints && <span className="mode-total-cap"> / {mode.maxPoints.toLocaleString()}</span>}
-                                </span>
-                                <span className="mode-total-label">points</span>
+                                {isArenaClosed(mode.id) ? (
+                                    <span className="mode-total-value closed">
+                                        CLOSED TODAY
+                                    </span>
+                                ) : (
+                                    <>
+                                        <span className="mode-total-value">
+                                            {calculateModeTotal(mode).toLocaleString()}
+                                            {mode.maxPoints && <span className="mode-total-cap"> / {mode.maxPoints.toLocaleString()}</span>}
+                                        </span>
+                                        <span className="mode-total-label">points</span>
+                                    </>
+                                )}
                             </div>
                         </div>
 

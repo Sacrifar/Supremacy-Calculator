@@ -119,6 +119,14 @@
     line-height: 1;
 }
 
+.mode-total-value.closed {
+    color: #e74c3c;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding-top: 4px;
+}
+
 .mode-total-label {
     font-size: 9px;
     text-transform: uppercase;

@@ -32,6 +32,29 @@ export function calculateDaysRemaining(endDate: Date): number {
 }
 
 /**
+ * Calculate number of "Supreme Arena" active days remaining until event end
+ * Supreme Arena is CLOSED on Monday (1) and Tuesday (2)
+ */
+export function calculateArenaDaysRemaining(endDate: Date): number {
+    const totalDays = calculateDaysRemaining(endDate);
+    const now = getCurrentUTCDate();
+    const current = new Date(now);
+    let count = 0;
+
+    for (let i = 0; i < totalDays; i++) {
+        const day = current.getUTCDay();
+        // 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
+        // Closed on Mon (1) and Tue (2)
+        if (day !== 1 && day !== 2) {
+            count++;
+        }
+        // Move to next day
+        current.setUTCDate(current.getUTCDate() + 1);
+    }
+    return count;
+}
+
+/**
  * Calculate number of daily resets remaining until event end
  * Each daily reset occurs at 00:00 UTC
  */

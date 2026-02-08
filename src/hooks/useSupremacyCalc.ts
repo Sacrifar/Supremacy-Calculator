@@ -129,8 +129,15 @@ export function useSupremacyCalc() {
         let weeklyRankings = 0;
         let dailyMissions = 0;
 
+        const now = new Date();
+        const day = now.getUTCDay();
+        const isArenaClosed = day === 1 || day === 2; // Monday or Tuesday
+
         // Calculate daily rankings
         DAILY_MODES.forEach((mode) => {
+            if (mode.id === 'arena-suprema' && isArenaClosed) {
+                return;
+            }
             dailyRankings += calculateModePoints(mode, (tierIndex) =>
                 getRankingValue(mode.id, tierIndex)
             );
@@ -160,12 +167,35 @@ export function useSupremacyCalc() {
     const calculateEventTotal = useCallback((): EventPointsSummary => {
         const points = calculatePoints();
         const daysRemaining = calculateDaysRemaining(eventEndDate);
+        const arenaDaysRemaining = calculateArenaDaysRemaining(eventEndDate);
         const weeksRemaining = calculateWeeklyResetsRemaining(eventEndDate);
 
-        // Daily points = (dailyRankings + dailyMissions) * remaining days
-        const totalDailyPoints = Math.round((points.dailyRankings + points.dailyMissions) * daysRemaining);
+        // Calculate theoretical daily points separately for projection
+        const arenaMode = DAILY_MODES.find(m => m.id === 'arena-suprema');
+        const arenaPoints = arenaMode ? calculateModePoints(arenaMode, (tier) => getRankingValue(arenaMode.id, tier)) : 0;
+
+        let otherDailyPoints = 0;
+        DAILY_MODES.forEach(mode => {
+            if (mode.id !== 'arena-suprema') {
+                otherDailyPoints += calculateModePoints(mode, (tier) => getRankingValue(mode.id, tier));
+            }
+        });
+
+        let missionPoints = 0;
+        DAILY_MISSIONS.forEach((mission) => {
+            missionPoints += getMissionValue(mission.id) * mission.points;
+        });
+
+        // Daily points projection:
+        // (Arena Points * Arena Days) + (Other Daily * Total Days) + (Missions * Total Days)
+        const totalDailyPoints = Math.round(
+            (arenaPoints * arenaDaysRemaining) +
+            (otherDailyPoints * daysRemaining) +
+            (missionPoints * daysRemaining)
+        );
 
         // Weekly points = weeklyRankings * remaining weeks (fractional)
+        // We use points.weeklyRankings because weekly points are not affected by daily closures
         const totalWeeklyPoints = Math.round(points.weeklyRankings * weeksRemaining);
 
         return {
@@ -176,7 +206,7 @@ export function useSupremacyCalc() {
             totalWeeklyPoints,
             eventTotal: totalDailyPoints + totalWeeklyPoints,
         };
-    }, [calculatePoints, eventEndDate]);
+    }, [calculatePoints, eventEndDate, getRankingValue, getMissionValue]);
 
     const resetAll = useCallback(() => {
         initializeDefaults();
