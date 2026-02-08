@@ -44,3 +44,11 @@ export interface PointsSummary {
   dailyMissions: number;
   total: number;
 }
+
+export interface EventPointsSummary extends PointsSummary {
+  daysRemaining: number;
+  weeksRemaining: number;
+  totalDailyPoints: number;  // (dailyRankings + dailyMissions) * daysRemaining
+  totalWeeklyPoints: number; // weeklyRankings * weeksRemaining
+  eventTotal: number;        // totalDailyPoints + totalWeeklyPoints
+}

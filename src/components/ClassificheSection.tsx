@@ -24,6 +24,17 @@ export function ClassificheSection({
         return calculateModePoints(mode, (tierIndex) => getRankingValue(mode.id, tierIndex));
     };
 
+    const isModeAtMax = (mode: GameMode): boolean => {
+        return mode.tiers.every((tier, index) => getRankingValue(mode.id, index) === tier.maxMembers);
+    };
+
+    const handleToggleMax = (mode: GameMode) => {
+        const setToZero = isModeAtMax(mode);
+        mode.tiers.forEach((tier, index) => {
+            updateRanking(mode.id, index, setToZero ? 0 : tier.maxMembers);
+        });
+    };
+
     return (
         <section className="classifiche-section" style={{ '--accent-color': accentColor } as React.CSSProperties}>
             <div className="section-header">
@@ -38,6 +49,13 @@ export function ClassificheSection({
                     <div key={mode.id} className="mode-card">
                         <div className="mode-header">
                             <h3 className="mode-title">{mode.name}</h3>
+                            <button
+                                className={`max-btn ${isModeAtMax(mode) ? 'active' : ''}`}
+                                onClick={() => handleToggleMax(mode)}
+                                title="Set all tiers to maximum"
+                            >
+                                MAX
+                            </button>
                             <div className="mode-total">
                                 <span className="mode-total-value">
                                     {calculateModeTotal(mode).toLocaleString()}

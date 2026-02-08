@@ -1,6 +1,11 @@
 // Game data constants for Supremacy Calculator
 import type { GameMode, Mission } from '../types';
 
+// Event end date (configurable - set to your event end date)
+// Format: Date.UTC(year, month (0-indexed), day, hour, minute, second)
+export const EVENT_END_DATE = new Date(Date.UTC(2026, 2, 4, 23, 59, 59)); // March 4, 2026 23:59:59 UTC
+
+
 export const DAILY_MODES: GameMode[] = [
     {
         id: 'arena-suprema',

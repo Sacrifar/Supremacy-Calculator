@@ -19,6 +19,22 @@ export function MissioniSection({
         }, 0);
     };
 
+    const areAllAtMax = (): boolean => {
+        return missions.every((mission) => getMissionValue(mission.id) === mission.maxMembers);
+    };
+
+    const handleToggleAllMax = () => {
+        const setToZero = areAllAtMax();
+        missions.forEach((mission) => {
+            updateMission(mission.id, setToZero ? 0 : mission.maxMembers);
+        });
+    };
+
+    const handleToggleMissionMax = (mission: Mission) => {
+        const currentValue = getMissionValue(mission.id);
+        updateMission(mission.id, currentValue === mission.maxMembers ? 0 : mission.maxMembers);
+    };
+
     return (
         <section className="missioni-section">
             <div className="section-header">
@@ -26,6 +42,13 @@ export function MissioniSection({
                     <h2 className="section-title">Daily Missions</h2>
                     <p className="section-subtitle">Points per member completing the mission</p>
                 </div>
+                <button
+                    className={`max-btn section-max-btn ${areAllAtMax() ? 'active' : ''}`}
+                    onClick={handleToggleAllMax}
+                    title="Set all missions to maximum"
+                >
+                    MAX ALL
+                </button>
                 <div className="section-total">
                     <span className="section-total-value">{calculateTotal().toLocaleString()}</span>
                     <span className="section-total-label">total points</span>
@@ -54,6 +77,13 @@ export function MissioniSection({
                                     max={mission.maxMembers}
                                     label="Members"
                                 />
+                                <button
+                                    className={`max-btn mini-max-btn ${completed === mission.maxMembers ? 'active' : ''}`}
+                                    onClick={() => handleToggleMissionMax(mission)}
+                                    title="Set to maximum"
+                                >
+                                    MAX
+                                </button>
                             </div>
 
                             <div className="mission-total">

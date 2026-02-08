@@ -3,6 +3,7 @@ import { Header } from './components/Header';
 import { ClassificheSection } from './components/ClassificheSection';
 import { MissioniSection } from './components/MissioniSection';
 import { GlifoscuroSection } from './components/GlifoscuroSection';
+import { EventTimer } from './components/EventTimer';
 import { DAILY_MODES, WEEKLY_MODES, DAILY_MISSIONS } from './data/gameData';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Analytics } from '@vercel/analytics/react';
@@ -14,27 +15,37 @@ function App() {
     setGuildSize,
     currentPoints,
     setCurrentPoints,
+    eventEndDate,
+    setEventEndDate,
     updateRanking,
     updateMission,
     getRankingValue,
     getMissionValue,
     calculatePoints,
+    calculateEventTotal,
     resetAll,
   } = useSupremacyCalc();
 
   const points = calculatePoints();
+  const eventPoints = calculateEventTotal();
 
   return (
     <div className="app">
       <div className="app-container">
         <Header
           points={points}
+          eventPoints={eventPoints}
           currentPoints={currentPoints}
           setCurrentPoints={setCurrentPoints}
           onReset={resetAll}
         />
 
-        <GlifoscuroSection projectedPoints={currentPoints + points.total} />
+        <EventTimer
+          eventEndDate={eventEndDate}
+          onEventEndDateChange={setEventEndDate}
+        />
+
+        <GlifoscuroSection projectedPoints={currentPoints + eventPoints.eventTotal} />
 
         <div className="guild-size-section">
           <label className="guild-size-label">
@@ -79,11 +90,12 @@ function App() {
         <footer className="app-footer">
           <p>Created by Sacrifar • Supremacy Calculator • Data automatically saved in browser</p>
         </footer>
+        <SpeedInsights />
+        <Analytics />
       </div>
-      <Analytics />
-      <SpeedInsights />
     </div>
   );
 }
 
 export default App;
+

@@ -110,6 +110,9 @@
     padding: 6px 0;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .mission-total {
@@ -132,6 +135,57 @@
     color: rgba(255, 255, 255, 0.5);
 }
 
+.section-max-btn {
+    background: linear-gradient(135deg, rgba(255, 230, 109, 0.2), rgba(255, 230, 109, 0.1));
+    border: 1px solid rgba(255, 230, 109, 0.4);
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #ffe66d;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.section-max-btn:hover {
+    background: linear-gradient(135deg, rgba(255, 230, 109, 0.4), rgba(255, 230, 109, 0.2));
+    border-color: #ffe66d;
+}
+
+.section-max-btn.active {
+    background: linear-gradient(135deg, #ffe66d, rgba(255, 230, 109, 0.8));
+    border-color: #ffe66d;
+    color: #1a1a2e;
+}
+
+.mini-max-btn {
+    background: linear-gradient(135deg, rgba(255, 230, 109, 0.15), rgba(255, 230, 109, 0.05));
+    border: 1px solid rgba(255, 230, 109, 0.3);
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 9px;
+    font-weight: 700;
+    color: #ffe66d;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+}
+
+.mini-max-btn:hover {
+    background: linear-gradient(135deg, rgba(255, 230, 109, 0.3), rgba(255, 230, 109, 0.15));
+    border-color: #ffe66d;
+}
+
+.mini-max-btn.active {
+    background: linear-gradient(135deg, #ffe66d, rgba(255, 230, 109, 0.8));
+    border-color: #ffe66d;
+    color: #1a1a2e;
+}
+
 @media (max-width: 600px) {
     .missioni-section .section-header {
         flex-direction: column;
@@ -141,5 +195,9 @@
     .section-total {
         width: 100%;
         text-align: center;
+    }
+
+    .section-max-btn {
+        width: 100%;
     }
 }

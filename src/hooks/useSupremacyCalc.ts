@@ -1,8 +1,9 @@
 // Custom hook for Supremacy Calculator logic
 import { useState, useCallback, useEffect } from 'react';
-import type { GuildRankData, MissionData, PointsSummary } from '../types';
-import { ALL_MODES, DAILY_MODES, WEEKLY_MODES, DAILY_MISSIONS } from '../data/gameData';
+import type { GuildRankData, MissionData, PointsSummary, EventPointsSummary } from '../types';
+import { ALL_MODES, DAILY_MODES, WEEKLY_MODES, DAILY_MISSIONS, EVENT_END_DATE } from '../data/gameData';
 import { calculateModePoints } from '../utils/calculations';
+import { calculateDaysRemaining, calculateWeeklyResetsRemaining } from '../utils/dateUtils';
 
 const STORAGE_KEY = 'supremacy-calculator-data';
 
@@ -11,6 +12,7 @@ interface StoredData {
     rankings: GuildRankData[];
     missions: MissionData[];
     currentPoints: number;
+    eventEndDate?: string; // ISO string for storage
 }
 
 export function useSupremacyCalc() {
@@ -18,6 +20,7 @@ export function useSupremacyCalc() {
     const [rankings, setRankings] = useState<GuildRankData[]>([]);
     const [missions, setMissions] = useState<MissionData[]>([]);
     const [currentPoints, setCurrentPoints] = useState(0);
+    const [eventEndDate, setEventEndDate] = useState<Date>(EVENT_END_DATE);
 
     // Initialize data
     useEffect(() => {
@@ -29,6 +32,9 @@ export function useSupremacyCalc() {
                 setRankings(data.rankings || []);
                 setMissions(data.missions || []);
                 setCurrentPoints(data.currentPoints || 0);
+                if (data.eventEndDate) {
+                    setEventEndDate(new Date(data.eventEndDate));
+                }
             } catch {
                 initializeDefaults();
             }
@@ -63,10 +69,16 @@ export function useSupremacyCalc() {
     // Save to localStorage
     useEffect(() => {
         if (rankings.length > 0) {
-            const data: StoredData = { guildSize, rankings, missions, currentPoints };
+            const data: StoredData = {
+                guildSize,
+                rankings,
+                missions,
+                currentPoints,
+                eventEndDate: eventEndDate.toISOString()
+            };
             localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
         }
-    }, [guildSize, rankings, missions, currentPoints]);
+    }, [guildSize, rankings, missions, currentPoints, eventEndDate]);
 
     const updateRanking = useCallback(
         (modeId: string, tierIndex: number, memberCount: number) => {
@@ -145,6 +157,27 @@ export function useSupremacyCalc() {
         };
     }, [getRankingValue, getMissionValue]);
 
+    const calculateEventTotal = useCallback((): EventPointsSummary => {
+        const points = calculatePoints();
+        const daysRemaining = calculateDaysRemaining(eventEndDate);
+        const weeksRemaining = calculateWeeklyResetsRemaining(eventEndDate);
+
+        // Daily points = (dailyRankings + dailyMissions) * remaining days
+        const totalDailyPoints = Math.round((points.dailyRankings + points.dailyMissions) * daysRemaining);
+
+        // Weekly points = weeklyRankings * remaining weeks (fractional)
+        const totalWeeklyPoints = Math.round(points.weeklyRankings * weeksRemaining);
+
+        return {
+            ...points,
+            daysRemaining,
+            weeksRemaining,
+            totalDailyPoints,
+            totalWeeklyPoints,
+            eventTotal: totalDailyPoints + totalWeeklyPoints,
+        };
+    }, [calculatePoints, eventEndDate]);
+
     const resetAll = useCallback(() => {
         initializeDefaults();
     }, []);
@@ -154,6 +187,8 @@ export function useSupremacyCalc() {
         setGuildSize,
         currentPoints,
         setCurrentPoints,
+        eventEndDate,
+        setEventEndDate,
         rankings,
         missions,
         updateRanking,
@@ -161,6 +196,7 @@ export function useSupremacyCalc() {
         getRankingValue,
         getMissionValue,
         calculatePoints,
+        calculateEventTotal,
         resetAll,
     };
 }

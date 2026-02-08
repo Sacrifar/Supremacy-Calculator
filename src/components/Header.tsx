@@ -1,15 +1,16 @@
-import type { PointsSummary } from '../types';
+import type { PointsSummary, EventPointsSummary } from '../types';
 import './Header.css';
 
 interface HeaderProps {
     points: PointsSummary;
+    eventPoints: EventPointsSummary;
     currentPoints: number;
     setCurrentPoints: (value: number) => void;
     onReset: () => void;
 }
 
-export function Header({ points, currentPoints, setCurrentPoints, onReset }: HeaderProps) {
-    const projectedTotal = currentPoints + points.total;
+export function Header({ points, eventPoints, currentPoints, setCurrentPoints, onReset }: HeaderProps) {
+    const projectedTotal = currentPoints + eventPoints.eventTotal;
 
     return (
         <header className="header">
@@ -23,7 +24,7 @@ export function Header({ points, currentPoints, setCurrentPoints, onReset }: Hea
                 </div>
 
                 <div className="total-section">
-                    <div className="total-label">Projected Points</div>
+                    <div className="total-label">Event Total Projection</div>
                     <div className="total-value">{projectedTotal.toLocaleString()}</div>
                     <button className="reset-btn" onClick={onReset}>
                         🔄 Reset
@@ -43,25 +44,26 @@ export function Header({ points, currentPoints, setCurrentPoints, onReset }: Hea
                     />
                 </label>
                 <div className="calculated-points">
-                    <span className="calculated-label">Calculated Points:</span>
-                    <span className="calculated-value">+{points.total.toLocaleString()}</span>
+                    <span className="calculated-label">Event Points ({eventPoints.daysRemaining} days):</span>
+                    <span className="calculated-value">+{eventPoints.eventTotal.toLocaleString()}</span>
                 </div>
             </div>
 
             <div className="points-breakdown">
                 <div className="breakdown-item">
-                    <span className="breakdown-label">Daily Rankings</span>
-                    <span className="breakdown-value daily">{points.dailyRankings.toLocaleString()}</span>
+                    <span className="breakdown-label">Daily (×{eventPoints.daysRemaining})</span>
+                    <span className="breakdown-value daily">{eventPoints.totalDailyPoints.toLocaleString()}</span>
                 </div>
                 <div className="breakdown-item">
-                    <span className="breakdown-label">Weekly Rankings</span>
-                    <span className="breakdown-value weekly">{points.weeklyRankings.toLocaleString()}</span>
+                    <span className="breakdown-label">Weekly (×{eventPoints.weeksRemaining.toFixed(1)})</span>
+                    <span className="breakdown-value weekly">{eventPoints.totalWeeklyPoints.toLocaleString()}</span>
                 </div>
                 <div className="breakdown-item">
-                    <span className="breakdown-label">Daily Missions</span>
-                    <span className="breakdown-value missions">{points.dailyMissions.toLocaleString()}</span>
+                    <span className="breakdown-label">Per Day</span>
+                    <span className="breakdown-value missions">{points.total.toLocaleString()}</span>
                 </div>
             </div>
         </header>
     );
 }
+
