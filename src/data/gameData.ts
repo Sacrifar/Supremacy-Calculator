@@ -19,7 +19,7 @@ export const DAILY_MODES: GameMode[] = [
         id: 'regno-onirico',
         name: 'Dream Realm',
         type: 'daily',
-        maxPoints: 2860,
+        maxPoints: 3020,
         tiers: [
             { position: 'Top 20', maxMembers: 4, points: 100 },
             { position: 'Top 50', maxMembers: 10, points: 80 },
