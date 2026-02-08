@@ -5,7 +5,7 @@ A web-based calculator for guild progression tracking in *Supremazia* — a guil
 ## Features
 
 ### Current Points Tracking
-- Enter your guild's current Supremazia points to see projected totals
+- Enter your guild's current Supremacy points to see projected totals
 - Data is automatically saved in your browser for quick access
 
 ### Daily Rankings
@@ -34,8 +34,8 @@ Log completion of daily missions that award bonus points:
 - **Honor Duel** — 300 points (up to 3 members)
 - **Arcane Labyrinth** — 300 points (up to 3 members)
 
-### Glifoscuro Difficulty Planner
-See which Glifoscuro (Glyphshade) difficulty levels are unlocked based on your projected points. Difficulty levels 1-25 require progressively more Pass Supremazia points, starting from 0 and scaling up to 385,000 points.
+### Gliphshade Difficulty Planner
+See which Gliphshade difficulty levels are unlocked based on your projected points. Difficulty levels 1-25 require progressively more Pass Supremazia points, starting from 0 and scaling up to 385,000 points.
 
 ### Guild Size Configuration
 Set your guild's member count to accurately calculate eligible participants for each ranking tier.
@@ -43,12 +43,16 @@ Set your guild's member count to accurately calculate eligible participants for 
 ## How It Works
 
 1. **Set Guild Members** — Input how many members are in your guild
-2. **Enter Current Points** — Add your existing Supremazia points
+2. **Enter Current Points** — Add your existing Supremacy points
 3. **Select Rankings** — Choose achieved tiers for each game mode
 4. **Complete Missions** — Check off daily missions as completed
 5. **View Projection** — See your total calculated points and unlocked difficulties
 
 All data persists in browser local storage, so your progress is saved between sessions.
+
+## Important Notes
+
+- **Excess members automatically flow to lower tiers** — If you assign more members than the maximum allowed for a ranking tier, the program automatically counts the excess members toward the next lower tier. For example, if you set 15 members for Top 20 (max 4), the program calculates 4 members at Top 20 points and 11 members at Top 50 points.
 
 ## Tech Stack
 
