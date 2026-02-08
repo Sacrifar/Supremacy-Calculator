@@ -5,6 +5,7 @@ import { MissioniSection } from './components/MissioniSection';
 import { GlifoscuroSection } from './components/GlifoscuroSection';
 import { DAILY_MODES, WEEKLY_MODES, DAILY_MISSIONS } from './data/gameData';
 import { SpeedInsights } from '@vercel/speed-insights/react';
+import { Analytics } from '@vercel/analytics/react';
 import './App.css';
 
 function App() {
@@ -79,6 +80,7 @@ function App() {
           <p>Created by Sacrifar • Supremacy Calculator • Data automatically saved in browser</p>
         </footer>
       </div>
+      <Analytics />
       <SpeedInsights />
     </div>
   );
