@@ -75,7 +75,7 @@ function App() {
 
 
         <footer className="app-footer">
-          <p>Supremacy Calculator • Data automatically saved in browser</p>
+          <p>Created by Sacrifar • Supremacy Calculator • Data automatically saved in browser</p>
         </footer>
       </div>
     </div>

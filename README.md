@@ -1,73 +1,74 @@
-# React + TypeScript + Vite
+# Supremacy Calculator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web-based calculator for guild progression tracking in *Supremazia* — a guild-based competitive game mode. Track rankings, calculate mission points, and plan your Glifoscuro difficulty unlocks.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Current Points Tracking
+- Enter your guild's current Supremazia points to see projected totals
+- Data is automatically saved in your browser for quick access
 
-## React Compiler
+### Daily Rankings
+Track points from two daily competitive modes:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Mode | Max Points | Description |
+|------|------------|-------------|
+| **Supreme Arena** | 4,140 | Daily arena competition with tiered rewards |
+| **Dream Realm** | 2,860 | Daily realm-based competition |
 
-## Expanding the ESLint configuration
+Each mode has 5 ranking tiers (Top 20, Top 50, Top 100, Top 200, Top 500) with different point rewards and member limits.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Weekly Rankings
+Track points from two weekly competitive modes:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+| Mode | Max Points | Description |
+|------|------------|-------------|
+| **Honor Duel** | 3,600 | Weekly 1v1 duel competition |
+| **Arcane Labyrinth** | 3,600 | Weekly dungeon progression event |
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Daily Missions
+Log completion of daily missions that award bonus points:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- **Arena / Supreme Arena** — 80 points (up to 20 members)
+- **Dream Realm** — 80 points (up to 20 members)
+- **Honor Duel** — 300 points (up to 3 members)
+- **Arcane Labyrinth** — 300 points (up to 3 members)
+
+### Glifoscuro Difficulty Planner
+See which Glifoscuro (Glyphshade) difficulty levels are unlocked based on your projected points. Difficulty levels 1-25 require progressively more Pass Supremazia points, starting from 0 and scaling up to 385,000 points.
+
+### Guild Size Configuration
+Set your guild's member count to accurately calculate eligible participants for each ranking tier.
+
+## How It Works
+
+1. **Set Guild Members** — Input how many members are in your guild
+2. **Enter Current Points** — Add your existing Supremazia points
+3. **Select Rankings** — Choose achieved tiers for each game mode
+4. **Complete Missions** — Check off daily missions as completed
+5. **View Projection** — See your total calculated points and unlocked difficulties
+
+All data persists in browser local storage, so your progress is saved between sessions.
+
+## Tech Stack
+
+- **React** — UI framework
+- **TypeScript** — Type-safe development
+- **Vite** — Build tool and dev server
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start dev server
+npm run dev
+
+# Build for production
+npm run build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Created by Sacrifar
