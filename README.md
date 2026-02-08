@@ -18,6 +18,8 @@ Track points from two daily competitive modes:
 
 Each mode has 5 ranking tiers (Top 20, Top 50, Top 100, Top 200, Top 500) with different point rewards and member limits.
 
+**Automatic Overflow Calculation**: The calculator automatically handles excess members by scaling them down to lower tiers. For example, if you have 6 members in Top 20, the 2 excess members are automatically counted in the Top 50 tier.
+
 ### Weekly Rankings
 Track points from two weekly competitive modes:
 
