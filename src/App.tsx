@@ -45,7 +45,13 @@ function App() {
           onEventEndDateChange={setEventEndDate}
         />
 
-        <GlifoscuroSection projectedPoints={currentPoints + eventPoints.eventTotal} />
+        <GlifoscuroSection
+          projectedPoints={currentPoints + eventPoints.eventTotal}
+          currentPoints={currentPoints}
+          dailyPoints={eventPoints.dailyRankings + eventPoints.dailyMissions}
+          weeklyPoints={eventPoints.weeklyRankings}
+          eventEndDate={eventEndDate}
+        />
 
         <div className="guild-size-section">
           <label className="guild-size-label">

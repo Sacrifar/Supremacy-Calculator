@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import DatePicker from 'react-datepicker';
 import { formatTimeRemaining, formatNextDailyReset, calculateDaysRemaining } from '../utils/dateUtils';
+import 'react-datepicker/dist/react-datepicker.css';
 import './EventTimer.css';
 
 interface EventTimerProps {
@@ -28,24 +30,28 @@ export function EventTimer({ eventEndDate, onEventEndDateChange }: EventTimerPro
         return () => clearInterval(interval);
     }, [eventEndDate]);
 
-    // Format date for input (YYYY-MM-DD)
-    const formatDateForInput = (date: Date): string => {
-        const year = date.getUTCFullYear();
-        const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-        const day = String(date.getUTCDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    };
-
-    const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const dateValue = e.target.value;
-        if (dateValue) {
-            const [year, month, day] = dateValue.split('-').map(Number);
-            const newDate = new Date(Date.UTC(year, month - 1, day, 23, 59, 59));
+    const handleDateChange = (date: Date | null) => {
+        if (date) {
+            // Set to end of day UTC to match game server time (23:59:59 UTC)
+            const newDate = new Date(Date.UTC(
+                date.getFullYear(),
+                date.getMonth(),
+                date.getDate(),
+                23, 59, 59
+            ));
             onEventEndDateChange(newDate);
         }
     };
 
     const progressPercentage = Math.max(0, Math.min(100, (1 - daysRemaining / 30) * 100));
+
+    // Convert UTC date to local date for display to avoid timezone shifts
+    // (e.g. 23:59 UTC displayed as next day in local time)
+    const displayDate = new Date(
+        eventEndDate.getUTCFullYear(),
+        eventEndDate.getUTCMonth(),
+        eventEndDate.getUTCDate()
+    );
 
     return (
         <div className="event-timer">
@@ -58,11 +64,15 @@ export function EventTimer({ eventEndDate, onEventEndDateChange }: EventTimerPro
                 <div className="timer-date-picker">
                     <label className="date-picker-label">
                         <span>End Date:</span>
-                        <input
-                            type="date"
-                            className="date-picker-input"
-                            value={formatDateForInput(eventEndDate)}
+                        <DatePicker
+                            selected={displayDate}
                             onChange={handleDateChange}
+                            dateFormat="dd/MM/yyyy"
+                            className="date-picker-input"
+                            calendarClassName="dark-calendar"
+                            minDate={new Date()}
+                            showPopperArrow={false}
+                            popperPlacement="bottom-end"
                         />
                     </label>
                 </div>

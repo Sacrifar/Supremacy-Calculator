@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { GameMode } from '../types';
 import { InputCounter } from './InputCounter';
 import { calculateModePoints } from '../utils/calculations';
@@ -20,6 +21,8 @@ export function ClassificheSection({
     updateRanking,
     accentColor,
 }: ClassificheSectionProps) {
+    const [showInfo, setShowInfo] = useState(false);
+
     const calculateModeTotal = (mode: GameMode): number => {
         return calculateModePoints(mode, (tierIndex) => getRankingValue(mode.id, tierIndex));
     };
@@ -39,8 +42,22 @@ export function ClassificheSection({
         <section className="classifiche-section" style={{ '--accent-color': accentColor } as React.CSSProperties}>
             <div className="section-header">
                 <div>
-                    <h2 className="section-title">{title}</h2>
+                    <h2 className="section-title">
+                        {title}
+                        <button
+                            className="info-btn"
+                            onClick={() => setShowInfo(!showInfo)}
+                            aria-label="Info"
+                        >
+                            ℹ
+                        </button>
+                    </h2>
                     <p className="section-subtitle">{subtitle}</p>
+                    {showInfo && (
+                        <p className="info-message">
+                            ⚠️ Exceeding members are automatically moved to lower tiers
+                        </p>
+                    )}
                 </div>
             </div>
 

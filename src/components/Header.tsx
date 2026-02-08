@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { PointsSummary, EventPointsSummary } from '../types';
 import './Header.css';
 
@@ -10,7 +11,34 @@ interface HeaderProps {
 }
 
 export function Header({ points, eventPoints, currentPoints, setCurrentPoints, onReset }: HeaderProps) {
-    const projectedTotal = currentPoints + eventPoints.eventTotal;
+    const [projectionMode, setProjectionMode] = useState<'event' | 'daily' | 'weekly'>('event');
+
+    const dailyRate = eventPoints.dailyRankings + eventPoints.dailyMissions;
+    const weeklyRate = (dailyRate * 7) + eventPoints.weeklyRankings;
+
+    const getProjectedValue = () => {
+        switch (projectionMode) {
+            case 'daily':
+                return dailyRate;
+            case 'weekly':
+                return weeklyRate;
+            case 'event':
+            default:
+                return currentPoints + eventPoints.eventTotal;
+        }
+    };
+
+    const getProjectionLabel = () => {
+        switch (projectionMode) {
+            case 'daily':
+                return 'Daily Projection';
+            case 'weekly':
+                return 'Weekly Projection';
+            case 'event':
+            default:
+                return 'Event Total Projection';
+        }
+    };
 
     return (
         <header className="header">
@@ -24,8 +52,27 @@ export function Header({ points, eventPoints, currentPoints, setCurrentPoints, o
                 </div>
 
                 <div className="total-section">
-                    <div className="total-label">Event Total Projection</div>
-                    <div className="total-value">{projectedTotal.toLocaleString()}</div>
+                    <div className="total-header">
+                        <div className="total-label">{getProjectionLabel()}</div>
+                        <div className="projection-toggles">
+                            <button
+                                className={`toggle-btn ${projectionMode === 'daily' ? 'active' : ''}`}
+                                onClick={() => setProjectionMode('daily')}
+                                title="Daily Rate"
+                            >1D</button>
+                            <button
+                                className={`toggle-btn ${projectionMode === 'weekly' ? 'active' : ''}`}
+                                onClick={() => setProjectionMode('weekly')}
+                                title="Weekly Rate"
+                            >7D</button>
+                            <button
+                                className={`toggle-btn ${projectionMode === 'event' ? 'active' : ''}`}
+                                onClick={() => setProjectionMode('event')}
+                                title="Event Total"
+                            >ALL</button>
+                        </div>
+                    </div>
+                    <div className="total-value">{getProjectedValue().toLocaleString()}</div>
                     <button className="reset-btn" onClick={onReset}>
                         🔄 Reset
                     </button>
@@ -44,18 +91,24 @@ export function Header({ points, eventPoints, currentPoints, setCurrentPoints, o
                     />
                 </label>
                 <div className="calculated-points">
-                    <span className="calculated-label">Event Points ({eventPoints.daysRemaining} days):</span>
+                    <span className="calculated-label">Remaining Event Points:</span>
                     <span className="calculated-value">+{eventPoints.eventTotal.toLocaleString()}</span>
                 </div>
             </div>
 
             <div className="points-breakdown">
                 <div className="breakdown-item">
-                    <span className="breakdown-label">Daily (×{eventPoints.daysRemaining})</span>
+                    <div>
+                        <span className="breakdown-label">Daily Total ({eventPoints.daysRemaining} days)</span>
+                        <div className="breakdown-subtext">Based on {eventPoints.daysRemaining} resets</div>
+                    </div>
                     <span className="breakdown-value daily">{eventPoints.totalDailyPoints.toLocaleString()}</span>
                 </div>
                 <div className="breakdown-item">
-                    <span className="breakdown-label">Weekly (×{eventPoints.weeksRemaining.toFixed(1)})</span>
+                    <div>
+                        <span className="breakdown-label">Weekly Total ({eventPoints.weeksRemaining.toFixed(1)} wks)</span>
+                        <div className="breakdown-subtext">Based on {eventPoints.weeksRemaining.toFixed(1)} resets</div>
+                    </div>
                     <span className="breakdown-value weekly">{eventPoints.totalWeeklyPoints.toLocaleString()}</span>
                 </div>
                 <div className="breakdown-item">

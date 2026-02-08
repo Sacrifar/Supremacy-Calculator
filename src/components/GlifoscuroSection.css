@@ -187,6 +187,13 @@
     color: #2ecc71;
 }
 
+.unlock-date {
+    font-size: 8px;
+    color: #4ecdc4;
+    margin-top: 3px;
+    white-space: nowrap;
+}
+
 @media (max-width: 720px) {
     .unlock-header {
         flex-direction: column;

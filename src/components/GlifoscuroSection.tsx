@@ -3,9 +3,50 @@ import './GlifoscuroSection.css';
 
 interface GlifoscuroSectionProps {
     projectedPoints: number;
+    currentPoints: number;
+    dailyPoints: number;
+    weeklyPoints: number;
+    eventEndDate: Date;
 }
 
-export function GlifoscuroSection({ projectedPoints }: GlifoscuroSectionProps) {
+export function GlifoscuroSection({
+    projectedPoints,
+    currentPoints,
+    dailyPoints,
+    weeklyPoints,
+    eventEndDate
+}: GlifoscuroSectionProps) {
+    // Calculate unlock date for a difficulty
+    const calculateUnlockDate = (requiredPoints: number): Date | null => {
+        if (currentPoints >= requiredPoints) {
+            return null; // Already unlocked
+        }
+
+        const pointsNeeded = requiredPoints - currentPoints;
+        if (dailyPoints <= 0) return null;
+
+        // Average points per day (weekly points / 7 + daily points)
+        const avgPointsPerDay = dailyPoints + (weeklyPoints / 7);
+        const daysNeeded = Math.ceil(pointsNeeded / avgPointsPerDay);
+
+        const unlockDate = new Date();
+        unlockDate.setDate(unlockDate.getDate() + daysNeeded);
+
+        // Check if within event period
+        if (unlockDate > eventEndDate) {
+            return null; // Won't unlock during event
+        }
+
+        return unlockDate;
+    };
+
+    // Format date as dd/mm
+    const formatDate = (date: Date): string => {
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        return `${day}/${month}`;
+    };
+
     // Find the highest unlocked difficulty
     const getUnlockedDifficulty = (): number => {
         let maxUnlocked = 1;
@@ -97,8 +138,11 @@ export function GlifoscuroSection({ projectedPoints }: GlifoscuroSectionProps) {
                 <div className="difficulties-grid">
                     {GLIFOSCURO_REQUIREMENTS.map((req) => {
                         const isUnlocked = projectedPoints >= req.requiredPoints;
+                        const isCurrentlyUnlocked = currentPoints >= req.requiredPoints;
                         const isCurrent = req.difficulty === unlockedDifficulty;
                         const isNext = nextUnlock && req.difficulty === nextUnlock.difficulty;
+                        // Show unlock date for difficulties not yet unlocked with current points
+                        const unlockDate = !isCurrentlyUnlocked ? calculateUnlockDate(req.requiredPoints) : null;
 
                         return (
                             <div
@@ -112,6 +156,9 @@ export function GlifoscuroSection({ projectedPoints }: GlifoscuroSectionProps) {
                                         : req.requiredPoints.toLocaleString()}
                                 </span>
                                 {isUnlocked && <span className="check-icon">✓</span>}
+                                {unlockDate && (
+                                    <span className="unlock-date">📅 {formatDate(unlockDate)}</span>
+                                )}
                             </div>
                         );
                     })}
