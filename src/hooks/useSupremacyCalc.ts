@@ -3,7 +3,7 @@ import { useState, useCallback, useEffect } from 'react';
 import type { GuildRankData, MissionData, PointsSummary, EventPointsSummary } from '../types';
 import { ALL_MODES, DAILY_MODES, WEEKLY_MODES, DAILY_MISSIONS, EVENT_END_DATE } from '../data/gameData';
 import { calculateModePoints } from '../utils/calculations';
-import { calculateDaysRemaining, calculateWeeklyResetsRemaining } from '../utils/dateUtils';
+import { calculateDaysRemaining, calculateWeeklyResetsRemaining, calculateArenaDaysRemaining } from '../utils/dateUtils';
 
 const STORAGE_KEY = 'supremacy-calculator-data';
 
