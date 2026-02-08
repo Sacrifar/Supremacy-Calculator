@@ -1,6 +1,6 @@
 # Supremacy Calculator
 
-A web-based calculator for guild progression tracking in *Supremazia* — a guild-based competitive game mode. Track rankings, calculate mission points, and plan your Glifoscuro difficulty unlocks.
+A web-based calculator for guild progression tracking in *Guild Supremacy* — a guild-based competitive game mode. Track rankings, calculate mission points, and plan your Gliphshade difficulty unlocks.
 
 ## Features
 
@@ -35,7 +35,7 @@ Log completion of daily missions that award bonus points:
 - **Arcane Labyrinth** — 300 points (up to 3 members)
 
 ### Gliphshade Difficulty Planner
-See which Gliphshade difficulty levels are unlocked based on your projected points. Difficulty levels 1-25 require progressively more Pass Supremazia points, starting from 0 and scaling up to 385,000 points.
+See which Gliphshade difficulty levels are unlocked based on your projected points. Difficulty levels 1-25 require progressively more Pass Supremacy points, starting from 0 and scaling up to 385,000 points.
 
 ### Guild Size Configuration
 Set your guild's member count to accurately calculate eligible participants for each ranking tier.
@@ -49,10 +49,6 @@ Set your guild's member count to accurately calculate eligible participants for 
 5. **View Projection** — See your total calculated points and unlocked difficulties
 
 All data persists in browser local storage, so your progress is saved between sessions.
-
-## Important Notes
-
-- **Excess members automatically flow to lower tiers** — If you assign more members than the maximum allowed for a ranking tier, the program automatically counts the excess members toward the next lower tier. For example, if you set 15 members for Top 20 (max 4), the program calculates 4 members at Top 20 points and 11 members at Top 50 points.
 
 ## Tech Stack
 
@@ -76,3 +72,4 @@ npm run build
 ---
 
 Created by Sacrifar
+Server G439
