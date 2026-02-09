@@ -24,10 +24,16 @@ function App() {
     calculatePoints,
     calculateEventTotal,
     resetAll,
+    saveDataToFile,
+    loadDataFromFile,
   } = useSupremacyCalc();
 
   const points = calculatePoints();
   const eventPoints = calculateEventTotal();
+
+  // Check if Supreme Arena is closed (Monday or Tuesday in UTC)
+  const now = new Date();
+  const isArenaClosed = now.getUTCDay() === 1 || now.getUTCDay() === 2;
 
   return (
     <div className="app">
@@ -38,6 +44,8 @@ function App() {
           currentPoints={currentPoints}
           setCurrentPoints={setCurrentPoints}
           onReset={resetAll}
+          onSaveData={saveDataToFile}
+          onLoadData={loadDataFromFile}
         />
 
         <EventTimer
@@ -74,6 +82,7 @@ function App() {
           getRankingValue={getRankingValue}
           updateRanking={updateRanking}
           accentColor="#4ecdc4"
+          isArenaClosed={isArenaClosed}
         />
 
         <ClassificheSection

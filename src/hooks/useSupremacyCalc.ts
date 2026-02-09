@@ -212,6 +212,52 @@ export function useSupremacyCalc() {
         initializeDefaults();
     }, []);
 
+    const saveDataToFile = useCallback(() => {
+        const data: StoredData = {
+            guildSize,
+            rankings,
+            missions,
+            currentPoints,
+            eventEndDate: eventEndDate.toISOString()
+        };
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `supremacy-calculator-${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }, [guildSize, rankings, missions, currentPoints, eventEndDate]);
+
+    const loadDataFromFile = useCallback(() => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.json';
+        input.onchange = (e) => {
+            const file = (e.target as HTMLInputElement).files?.[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        const data: StoredData = JSON.parse(event.target?.result as string);
+                        if (data.guildSize) setGuildSize(data.guildSize);
+                        if (data.rankings) setRankings(data.rankings);
+                        if (data.missions) setMissions(data.missions);
+                        if (data.currentPoints !== undefined) setCurrentPoints(data.currentPoints);
+                        if (data.eventEndDate) setEventEndDate(new Date(data.eventEndDate));
+                    } catch (error) {
+                        console.error('Error loading file:', error);
+                        alert('Error loading file. Please make sure it is a valid JSON file.');
+                    }
+                };
+                reader.readAsText(file);
+            }
+        };
+        input.click();
+    }, []);
+
     return {
         guildSize,
         setGuildSize,
@@ -228,5 +274,7 @@ export function useSupremacyCalc() {
         calculatePoints,
         calculateEventTotal,
         resetAll,
+        saveDataToFile,
+        loadDataFromFile,
     };
 }

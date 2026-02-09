@@ -8,10 +8,17 @@ interface HeaderProps {
     currentPoints: number;
     setCurrentPoints: (value: number) => void;
     onReset: () => void;
+    onSaveData: () => void;
+    onLoadData: () => void;
 }
 
-export function Header({ points, eventPoints, currentPoints, setCurrentPoints, onReset }: HeaderProps) {
+export function Header({ points, eventPoints, currentPoints, setCurrentPoints, onReset, onSaveData, onLoadData }: HeaderProps) {
     const [projectionMode, setProjectionMode] = useState<'event' | 'daily' | 'weekly'>('event');
+
+    const handleAddDailyPoints = () => {
+        const dailyRate = eventPoints.dailyRankings + eventPoints.dailyMissions;
+        setCurrentPoints(currentPoints + dailyRate);
+    };
 
     const dailyRate = eventPoints.dailyRankings + eventPoints.dailyMissions;
     const weeklyRate = (dailyRate * 7) + eventPoints.weeklyRankings;
@@ -71,6 +78,15 @@ export function Header({ points, eventPoints, currentPoints, setCurrentPoints, o
                                 title="Event Total"
                             >ALL</button>
                         </div>
+                        {projectionMode === 'daily' && (
+                            <button
+                                className="add-daily-btn"
+                                onClick={handleAddDailyPoints}
+                                title="Add daily projected points to Current Points"
+                            >
+                                ➕ Add to Current
+                            </button>
+                        )}
                     </div>
                     <div className="total-value">{getProjectedValue().toLocaleString()}</div>
                     <button className="reset-btn" onClick={onReset}>
@@ -80,16 +96,34 @@ export function Header({ points, eventPoints, currentPoints, setCurrentPoints, o
             </div>
 
             <div className="current-points-section">
-                <label className="current-points-label">
-                    <span>Current Points:</span>
-                    <input
-                        type="number"
-                        className="current-points-input"
-                        value={currentPoints}
-                        onChange={(e) => setCurrentPoints(Math.max(0, parseInt(e.target.value) || 0))}
-                        min={0}
-                    />
-                </label>
+                <div className="current-points-row">
+                    <label className="current-points-label">
+                        <span>Current Points:</span>
+                        <input
+                            type="number"
+                            className="current-points-input"
+                            value={currentPoints}
+                            onChange={(e) => setCurrentPoints(Math.max(0, parseInt(e.target.value) || 0))}
+                            min={0}
+                        />
+                    </label>
+                    <div className="save-load-buttons">
+                        <button
+                            className="save-btn"
+                            onClick={onSaveData}
+                            title="Save current data to file"
+                        >
+                            💾 Save
+                        </button>
+                        <button
+                            className="load-btn"
+                            onClick={onLoadData}
+                            title="Load data from file"
+                        >
+                            📂 Load
+                        </button>
+                    </div>
+                </div>
                 <div className="calculated-points">
                     <span className="calculated-label">Remaining Event Points:</span>
                     <span className="calculated-value">+{eventPoints.eventTotal.toLocaleString()}</span>

@@ -11,6 +11,7 @@ interface ClassificheSectionProps {
     getRankingValue: (modeId: string, tierIndex: number) => number;
     updateRanking: (modeId: string, tierIndex: number, value: number) => void;
     accentColor: string;
+    isArenaClosed?: boolean;
 }
 
 export function ClassificheSection({
@@ -20,6 +21,7 @@ export function ClassificheSection({
     getRankingValue,
     updateRanking,
     accentColor,
+    isArenaClosed,
 }: ClassificheSectionProps) {
     const [showInfo, setShowInfo] = useState(false);
 
@@ -65,7 +67,12 @@ export function ClassificheSection({
 
             <div className="modes-grid">
                 {modes.map((mode) => (
-                    <div key={mode.id} className="mode-card">
+                    <div key={mode.id} className={`mode-card ${isArenaClosed && mode.id === 'arena-suprema' ? 'arena-closed' : ''}`}>
+                        {isArenaClosed && mode.id === 'arena-suprema' && (
+                            <div className="arena-closed-badge">
+                                🚫 Closed today (Mon/Tue)
+                            </div>
+                        )}
                         <div className="mode-header">
                             <h3 className="mode-title">{mode.name}</h3>
                             <button
