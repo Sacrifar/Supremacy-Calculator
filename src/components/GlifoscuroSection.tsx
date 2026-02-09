@@ -1,20 +1,27 @@
 import { GLIFOSCURO_REQUIREMENTS } from '../data/gameData';
+import type { ProjectionMode } from '../App';
 import './GlifoscuroSection.css';
 
 interface GlifoscuroSectionProps {
     projectedPoints: number;
     currentPoints: number;
-    dailyPoints: number;
+    arenaPoints: number;
+    dreamRealmPoints: number;
+    dailyMissions: number;
     weeklyPoints: number;
     eventEndDate: Date;
+    projectionMode: ProjectionMode;
 }
 
 export function GlifoscuroSection({
     projectedPoints,
     currentPoints,
-    dailyPoints,
+    arenaPoints,
+    dreamRealmPoints,
+    dailyMissions,
     weeklyPoints,
-    eventEndDate
+    eventEndDate,
+    projectionMode
 }: GlifoscuroSectionProps) {
     // Calculate unlock date for a difficulty
     const calculateUnlockDate = (requiredPoints: number): Date | null => {
@@ -23,21 +30,56 @@ export function GlifoscuroSection({
         }
 
         const pointsNeeded = requiredPoints - currentPoints;
-        if (dailyPoints <= 0) return null;
+        const totalDailyPoints = arenaPoints + dreamRealmPoints + dailyMissions;
+        if (totalDailyPoints <= 0) return null;
 
-        // Average points per day (weekly points / 7 + daily points)
-        const avgPointsPerDay = dailyPoints + (weeklyPoints / 7);
-        const daysNeeded = Math.ceil(pointsNeeded / avgPointsPerDay);
+        // Iterate day by day starting from TODAY to match the event projection.
+        // Game resets at 00:00 UTC daily:
+        //   - SA & Dream Realm rankings from previous day are awarded (SA closed Mon/Tue)
+        //   - Daily missions count immediately
+        //   - Weekly rankings awarded on Monday reset
+        let accumulatedPoints = 0;
+        const now = new Date();
+        const startYear = now.getUTCFullYear();
+        const startMonth = now.getUTCMonth();
+        const startDay = now.getUTCDate();
 
-        const unlockDate = new Date();
-        unlockDate.setDate(unlockDate.getDate() + daysNeeded);
+        // Start from day 0 (today) to be consistent with daysRemaining in projection
+        for (let day = 0; day < 366; day++) {
+            const checkDate = new Date(Date.UTC(startYear, startMonth, startDay + day));
+            const dayOfWeek = checkDate.getUTCDay();
+            const isMonday = dayOfWeek === 1;
+            const isTuesday = dayOfWeek === 2;
 
-        // Check if within event period
-        if (unlockDate > eventEndDate) {
-            return null; // Won't unlock during event
+            // Check if this day is still within the event period
+            if (checkDate > eventEndDate) break;
+
+            // Add daily points:
+            // - Arena rankings only on open days (Mon/Tue are closed)
+            // - Dream Realm rankings every day
+            // - Missions every day
+            if (isMonday || isTuesday) {
+                accumulatedPoints += dreamRealmPoints + dailyMissions;
+            } else {
+                accumulatedPoints += totalDailyPoints;
+            }
+
+            // Add weekly points on Monday (weekly reset day)
+            if (isMonday) {
+                accumulatedPoints += weeklyPoints;
+            }
+
+            // Check if we've accumulated enough
+            if (accumulatedPoints >= pointsNeeded) {
+                // Rankings are awarded at the next daily reset (00:00 UTC of the next day)
+                // So the actual unlock date is the day after the play day
+                const unlockDate = new Date(Date.UTC(startYear, startMonth, startDay + day + 1));
+                if (unlockDate > eventEndDate) return null;
+                return unlockDate;
+            }
         }
 
-        return unlockDate;
+        return null; // Won't unlock during event
     };
 
     // Format date as dd/mm
@@ -103,7 +145,12 @@ export function GlifoscuroSection({
                             <span className="unlock-value">{unlockedDifficulty}</span>
                         </div>
                         <div className="points-display">
-                            <span className="points-label">Supremacy Pass</span>
+                            <span className="points-label">
+                                Supremacy Pass
+                                <span className="projection-indicator">
+                                    ({projectionMode === 'daily' ? '1D' : projectionMode === 'weekly' ? '7D' : 'Event'})
+                                </span>
+                            </span>
                             <span className="points-value">{projectedPoints.toLocaleString()}</span>
                         </div>
                     </div>
@@ -143,11 +190,13 @@ export function GlifoscuroSection({
                         const isNext = nextUnlock && req.difficulty === nextUnlock.difficulty;
                         // Show unlock date for difficulties not yet unlocked with current points
                         const unlockDate = !isCurrentlyUnlocked ? calculateUnlockDate(req.requiredPoints) : null;
+                        // Check if this difficulty won't be unlockable before event ends
+                        const wontUnlock = !isCurrentlyUnlocked && !unlockDate && (arenaPoints + dreamRealmPoints + dailyMissions) > 0;
 
                         return (
                             <div
                                 key={req.difficulty}
-                                className={`difficulty-card ${isUnlocked ? 'unlocked' : 'locked'} ${isCurrent ? 'current' : ''} ${isNext ? 'next' : ''}`}
+                                className={`difficulty-card ${isUnlocked ? 'unlocked' : 'locked'} ${isCurrent ? 'current' : ''} ${isNext ? 'next' : ''} ${wontUnlock ? 'unreachable' : ''}`}
                             >
                                 <span className="difficulty-number">{req.difficulty}</span>
                                 <span className="difficulty-req">
@@ -158,6 +207,9 @@ export function GlifoscuroSection({
                                 {isUnlocked && <span className="check-icon">✓</span>}
                                 {unlockDate && (
                                     <span className="unlock-date">📅 {formatDate(unlockDate)}</span>
+                                )}
+                                {wontUnlock && (
+                                    <span className="unlock-date unreachable">⚠️ N/A</span>
                                 )}
                             </div>
                         );

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSupremacyCalc } from './hooks/useSupremacyCalc';
 import { Header } from './components/Header';
 import { ClassificheSection } from './components/ClassificheSection';
@@ -8,6 +9,8 @@ import { DAILY_MODES, WEEKLY_MODES, DAILY_MISSIONS } from './data/gameData';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Analytics } from '@vercel/analytics/react';
 import './App.css';
+
+export type ProjectionMode = 'event' | 'daily' | 'weekly';
 
 function App() {
   const {
@@ -28,12 +31,30 @@ function App() {
     loadDataFromFile,
   } = useSupremacyCalc();
 
+  const [projectionMode, setProjectionMode] = useState<ProjectionMode>('event');
+
   const points = calculatePoints();
   const eventPoints = calculateEventTotal();
 
   // Check if Supreme Arena is closed (Monday or Tuesday in UTC)
   const now = new Date();
   const isArenaClosed = now.getUTCDay() === 1 || now.getUTCDay() === 2;
+
+  // Calculate projected points based on projection mode
+  const dailyRate = eventPoints.dailyRankings + eventPoints.dailyMissions;
+  const weeklyRate = (dailyRate * 7) + eventPoints.weeklyRankings;
+
+  const getProjectedPoints = (): number => {
+    switch (projectionMode) {
+      case 'daily':
+        return currentPoints + dailyRate;
+      case 'weekly':
+        return currentPoints + weeklyRate;
+      case 'event':
+      default:
+        return currentPoints + eventPoints.eventTotal;
+    }
+  };
 
   return (
     <div className="app">
@@ -46,6 +67,8 @@ function App() {
           onReset={resetAll}
           onSaveData={saveDataToFile}
           onLoadData={loadDataFromFile}
+          projectionMode={projectionMode}
+          setProjectionMode={setProjectionMode}
         />
 
         <EventTimer
@@ -54,11 +77,14 @@ function App() {
         />
 
         <GlifoscuroSection
-          projectedPoints={currentPoints + eventPoints.eventTotal}
+          projectedPoints={getProjectedPoints()}
           currentPoints={currentPoints}
-          dailyPoints={eventPoints.dailyRankings + eventPoints.dailyMissions}
+          arenaPoints={eventPoints.arenaPoints}
+          dreamRealmPoints={eventPoints.dreamRealmPoints}
+          dailyMissions={eventPoints.dailyMissions}
           weeklyPoints={eventPoints.weeklyRankings}
           eventEndDate={eventEndDate}
+          projectionMode={projectionMode}
         />
 
         <div className="guild-size-section">

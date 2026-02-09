@@ -202,6 +202,8 @@ export function useSupremacyCalc() {
             ...points,
             daysRemaining,
             weeksRemaining,
+            arenaPoints,
+            dreamRealmPoints: otherDailyPoints,
             totalDailyPoints,
             totalWeeklyPoints,
             eventTotal: totalDailyPoints + totalWeeklyPoints,

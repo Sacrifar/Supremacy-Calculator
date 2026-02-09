@@ -48,6 +48,8 @@ export interface PointsSummary {
 export interface EventPointsSummary extends PointsSummary {
   daysRemaining: number;
   weeksRemaining: number;
+  arenaPoints: number;       // Supreme Arena daily points (closed Mon/Tue)
+  dreamRealmPoints: number;  // Dream Realm daily points (every day)
   totalDailyPoints: number;  // (dailyRankings + dailyMissions) * daysRemaining
   totalWeeklyPoints: number; // weeklyRankings * weeksRemaining
   eventTotal: number;        // totalDailyPoints + totalWeeklyPoints

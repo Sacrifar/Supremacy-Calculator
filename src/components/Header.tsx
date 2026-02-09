@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import type { PointsSummary, EventPointsSummary } from '../types';
+import type { ProjectionMode } from '../App';
 import './Header.css';
 
 interface HeaderProps {
@@ -10,10 +10,11 @@ interface HeaderProps {
     onReset: () => void;
     onSaveData: () => void;
     onLoadData: () => void;
+    projectionMode: ProjectionMode;
+    setProjectionMode: (mode: ProjectionMode) => void;
 }
 
-export function Header({ points, eventPoints, currentPoints, setCurrentPoints, onReset, onSaveData, onLoadData }: HeaderProps) {
-    const [projectionMode, setProjectionMode] = useState<'event' | 'daily' | 'weekly'>('event');
+export function Header({ points, eventPoints, currentPoints, setCurrentPoints, onReset, onSaveData, onLoadData, projectionMode, setProjectionMode }: HeaderProps) {
 
     const handleAddDailyPoints = () => {
         const dailyRate = eventPoints.dailyRankings + eventPoints.dailyMissions;

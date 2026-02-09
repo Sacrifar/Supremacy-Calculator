@@ -95,6 +95,12 @@
     color: #f1c40f;
 }
 
+.projection-indicator {
+    color: #4ecdc4;
+    font-weight: 600;
+    margin-left: 4px;
+}
+
 .next-unlock {
     background: rgba(0, 0, 0, 0.2);
     border-radius: 8px;
