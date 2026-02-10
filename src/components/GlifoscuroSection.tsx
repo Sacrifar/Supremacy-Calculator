@@ -30,52 +30,60 @@ export function GlifoscuroSection({
         }
 
         const pointsNeeded = requiredPoints - currentPoints;
-        const totalDailyPoints = arenaPoints + dreamRealmPoints + dailyMissions;
-        if (totalDailyPoints <= 0) return null;
+        if (arenaPoints + dreamRealmPoints + dailyMissions <= 0) return null;
 
-        // Iterate day by day starting from TODAY to match the event projection.
+        // Iterate day by day starting from TODAY.
         // Game resets at 00:00 UTC daily:
-        //   - SA & Dream Realm rankings from previous day are awarded (SA closed Mon/Tue)
-        //   - Daily missions count immediately
-        //   - Weekly rankings awarded on Monday reset
+        //   - Rankings (SA & Dream Realm) from the PREVIOUS day are awarded at reset
+        //     (SA is closed on Mon/Tue, so no arena rankings from those days)
+        //   - Weekly rankings are awarded on Monday reset
+        //   - Daily missions are earned IMMEDIATELY when completed (same day)
         let accumulatedPoints = 0;
         const now = new Date();
         const startYear = now.getUTCFullYear();
         const startMonth = now.getUTCMonth();
         const startDay = now.getUTCDate();
 
-        // Start from day 0 (today) to be consistent with daysRemaining in projection
         for (let day = 0; day < 366; day++) {
             const checkDate = new Date(Date.UTC(startYear, startMonth, startDay + day));
             const dayOfWeek = checkDate.getUTCDay();
             const isMonday = dayOfWeek === 1;
-            const isTuesday = dayOfWeek === 2;
 
             // Check if this day is still within the event period
             if (checkDate > eventEndDate) break;
 
-            // Add daily points:
-            // - Arena rankings only on open days (Mon/Tue are closed)
-            // - Dream Realm rankings every day
-            // - Missions every day
-            if (isMonday || isTuesday) {
-                accumulatedPoints += dreamRealmPoints + dailyMissions;
-            } else {
-                accumulatedPoints += totalDailyPoints;
+            // STEP 1: At daily reset — add ranking points earned the PREVIOUS day
+            if (day > 0) {
+                const prevDate = new Date(Date.UTC(startYear, startMonth, startDay + day - 1));
+                const prevDayOfWeek = prevDate.getUTCDay();
+                const prevIsArenaClosed = prevDayOfWeek === 1 || prevDayOfWeek === 2;
+
+                // Dream Realm rankings are awarded every day
+                accumulatedPoints += dreamRealmPoints;
+                // Arena rankings only if arena was open the previous day
+                if (!prevIsArenaClosed) {
+                    accumulatedPoints += arenaPoints;
+                }
             }
 
-            // Add weekly points on Monday (weekly reset day)
+            // STEP 2: Weekly points awarded on Monday reset
             if (isMonday) {
                 accumulatedPoints += weeklyPoints;
             }
 
-            // Check if we've accumulated enough
+            // Check if reset-awarded points are enough → unlock happens at this reset
             if (accumulatedPoints >= pointsNeeded) {
-                // Rankings are awarded at the next daily reset (00:00 UTC of the next day)
-                // So the actual unlock date is the day after the play day
-                const unlockDate = new Date(Date.UTC(startYear, startMonth, startDay + day + 1));
-                if (unlockDate > eventEndDate) return null;
-                return unlockDate;
+                if (checkDate > eventEndDate) return null;
+                return checkDate;
+            }
+
+            // STEP 3: Daily missions earned IMMEDIATELY during the day
+            accumulatedPoints += dailyMissions;
+
+            // Check if missions push us over → unlock happens TODAY (same day)
+            if (accumulatedPoints >= pointsNeeded) {
+                if (checkDate > eventEndDate) return null;
+                return checkDate;
             }
         }
 
