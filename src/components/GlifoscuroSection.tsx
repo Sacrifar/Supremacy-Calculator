@@ -98,11 +98,21 @@ export function GlifoscuroSection({
     };
 
     // Find the highest unlocked difficulty
+    // Uses the calendar simulation to ensure consistency with unlock dates
     const getUnlockedDifficulty = (): number => {
         let maxUnlocked = 1;
         for (const req of GLIFOSCURO_REQUIREMENTS) {
-            if (projectedPoints >= req.requiredPoints) {
+            if (currentPoints >= req.requiredPoints) {
+                // Already unlocked with current points
                 maxUnlocked = req.difficulty;
+            } else if (projectedPoints >= req.requiredPoints) {
+                // Check if actually achievable before event end via calendar simulation
+                const unlockDate = calculateUnlockDate(req.requiredPoints);
+                if (unlockDate) {
+                    maxUnlocked = req.difficulty;
+                } else {
+                    break; // Can't reach this in time, stop here
+                }
             } else {
                 break;
             }
@@ -115,10 +125,14 @@ export function GlifoscuroSection({
         const currentMax = getUnlockedDifficulty();
         const next = GLIFOSCURO_REQUIREMENTS.find(r => r.difficulty === currentMax + 1);
         if (!next) return null;
+        const isAlreadyUnlocked = currentPoints >= next.requiredPoints;
+        const unlockDate = !isAlreadyUnlocked ? calculateUnlockDate(next.requiredPoints) : null;
+        const unreachable = !isAlreadyUnlocked && !unlockDate && (arenaPoints + dreamRealmPoints + dailyMissions) > 0;
         return {
             difficulty: next.difficulty,
             pointsNeeded: next.requiredPoints - projectedPoints,
-            requiredPoints: next.requiredPoints
+            requiredPoints: next.requiredPoints,
+            unreachable
         };
     };
 
@@ -167,8 +181,10 @@ export function GlifoscuroSection({
                         <div className="next-unlock">
                             <div className="progress-info">
                                 <span>Next unlock: <strong>Difficulty {nextUnlock.difficulty}</strong></span>
-                                <span className="points-needed">
-                                    <strong>{nextUnlock.pointsNeeded.toLocaleString()}</strong> points needed
+                                <span className={`points-needed ${nextUnlock.unreachable ? 'unreachable' : ''}`}>
+                                    {nextUnlock.unreachable
+                                        ? <>⚠️ Not enough time</>
+                                        : <><strong>{nextUnlock.pointsNeeded.toLocaleString()}</strong> points needed</>}
                                 </span>
                             </div>
                             <div className="progress-bar">
@@ -192,12 +208,13 @@ export function GlifoscuroSection({
 
                 <div className="difficulties-grid">
                     {GLIFOSCURO_REQUIREMENTS.map((req) => {
-                        const isUnlocked = projectedPoints >= req.requiredPoints;
                         const isCurrentlyUnlocked = currentPoints >= req.requiredPoints;
-                        const isCurrent = req.difficulty === unlockedDifficulty;
-                        const isNext = nextUnlock && req.difficulty === nextUnlock.difficulty;
                         // Show unlock date for difficulties not yet unlocked with current points
                         const unlockDate = !isCurrentlyUnlocked ? calculateUnlockDate(req.requiredPoints) : null;
+                        // A difficulty is "unlocked" if already unlocked OR reachable before event end
+                        const isUnlocked = isCurrentlyUnlocked || !!unlockDate;
+                        const isCurrent = req.difficulty === unlockedDifficulty;
+                        const isNext = nextUnlock && req.difficulty === nextUnlock.difficulty;
                         // Check if this difficulty won't be unlockable before event ends
                         const wontUnlock = !isCurrentlyUnlocked && !unlockDate && (arenaPoints + dreamRealmPoints + dailyMissions) > 0;
 
