@@ -14,7 +14,7 @@ Track points from two daily competitive modes:
 | Mode | Max Points | Description |
 |------|------------|-------------|
 | **Supreme Arena** | 4,140 | Daily arena competition with tiered rewards |
-| **Dream Realm** | 2,860 | Daily realm-based competition |
+| **Dream Realm** | 3,200 | Daily realm-based competition |
 
 Each mode has 5 ranking tiers (Top 20, Top 50, Top 100, Top 200, Top 500) with different point rewards and member limits.
 
