@@ -107,7 +107,7 @@ export function ClassificheSection({
                                             value={getRankingValue(mode.id, index)}
                                             onChange={(value) => updateRanking(mode.id, index, value)}
                                             max={tier.maxMembers}
-                                            limit={500}
+                                            limit={30}
                                         />
                                     </div>
                                 );
