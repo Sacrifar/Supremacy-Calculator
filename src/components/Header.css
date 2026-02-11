@@ -298,11 +298,13 @@
 .current-points-input::-webkit-outer-spin-button,
 .current-points-input::-webkit-inner-spin-button {
   -webkit-appearance: none;
+  appearance: none;
   margin: 0;
 }
 
 .current-points-input {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 .calculated-points {

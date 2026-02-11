@@ -73,13 +73,13 @@ export const DAILY_MISSIONS: Mission[] = [
 
 export const ALL_MODES = [...DAILY_MODES, ...WEEKLY_MODES];
 
-// Glifoscuro unlock requirements (Pass Supremazia needed for each difficulty)
-export interface GlifoscuroRequirement {
+// Glyphshade unlock requirements (Supremacy Pass points needed for each difficulty)
+export interface GlyphshadeRequirement {
     difficulty: number;
     requiredPoints: number;
 }
 
-export const GLIFOSCURO_REQUIREMENTS: GlifoscuroRequirement[] = [
+export const GLYPHSHADE_REQUIREMENTS: GlyphshadeRequirement[] = [
     { difficulty: 1, requiredPoints: 0 },
     { difficulty: 2, requiredPoints: 10000 },
     { difficulty: 3, requiredPoints: 20000 },

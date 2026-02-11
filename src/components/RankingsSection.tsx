@@ -2,9 +2,9 @@ import { useState } from 'react';
 import type { GameMode } from '../types';
 import { InputCounter } from './InputCounter';
 import { calculateModePoints } from '../utils/calculations';
-import './ClassificheSection.css';
+import './RankingsSection.css';
 
-interface ClassificheSectionProps {
+interface RankingsSectionProps {
     title: string;
     subtitle: string;
     modes: GameMode[];
@@ -14,7 +14,7 @@ interface ClassificheSectionProps {
     isArenaClosed?: boolean;
 }
 
-export function ClassificheSection({
+export function RankingsSection({
     title,
     subtitle,
     modes,
@@ -22,7 +22,7 @@ export function ClassificheSection({
     updateRanking,
     accentColor,
     isArenaClosed,
-}: ClassificheSectionProps) {
+}: RankingsSectionProps) {
     const [showInfo, setShowInfo] = useState(false);
 
     const calculateModeTotal = (mode: GameMode): number => {
@@ -43,7 +43,7 @@ export function ClassificheSection({
 
 
     return (
-        <section className="classifiche-section" style={{ '--accent-color': accentColor } as React.CSSProperties}>
+        <section className="rankings-section" style={{ '--accent-color': accentColor } as React.CSSProperties}>
             <div className="section-header">
                 <div>
                     <h2 className="section-title">

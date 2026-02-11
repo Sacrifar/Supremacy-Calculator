@@ -1,18 +1,18 @@
 import type { Mission } from '../types';
 import { InputCounter } from './InputCounter';
-import './MissioniSection.css';
+import './MissionsSection.css';
 
-interface MissioniSectionProps {
+interface MissionsSectionProps {
     missions: Mission[];
     getMissionValue: (missionId: string) => number;
     updateMission: (missionId: string, value: number) => void;
 }
 
-export function MissioniSection({
+export function MissionsSection({
     missions,
     getMissionValue,
     updateMission,
-}: MissioniSectionProps) {
+}: MissionsSectionProps) {
     const calculateTotal = (): number => {
         return missions.reduce((total, mission) => {
             return total + getMissionValue(mission.id) * mission.points;
@@ -36,7 +36,7 @@ export function MissioniSection({
     };
 
     return (
-        <section className="missioni-section">
+        <section className="missions-section">
             <div className="section-header">
                 <div>
                     <h2 className="section-title">Daily Missions</h2>

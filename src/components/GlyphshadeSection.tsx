@@ -1,8 +1,8 @@
-import { GLIFOSCURO_REQUIREMENTS } from '../data/gameData';
+import { GLYPHSHADE_REQUIREMENTS } from '../data/gameData';
 import type { ProjectionMode } from '../App';
-import './GlifoscuroSection.css';
+import './GlyphshadeSection.css';
 
-interface GlifoscuroSectionProps {
+interface GlyphshadeSectionProps {
     projectedPoints: number;
     currentPoints: number;
     arenaPoints: number;
@@ -13,7 +13,7 @@ interface GlifoscuroSectionProps {
     projectionMode: ProjectionMode;
 }
 
-export function GlifoscuroSection({
+export function GlyphshadeSection({
     projectedPoints,
     currentPoints,
     arenaPoints,
@@ -22,7 +22,7 @@ export function GlifoscuroSection({
     weeklyPoints,
     eventEndDate,
     projectionMode
-}: GlifoscuroSectionProps) {
+}: GlyphshadeSectionProps) {
     // Calculate unlock date for a difficulty
     const calculateUnlockDate = (requiredPoints: number): Date | null => {
         if (currentPoints >= requiredPoints) {
@@ -101,7 +101,7 @@ export function GlifoscuroSection({
     // Uses the calendar simulation to ensure consistency with unlock dates
     const getUnlockedDifficulty = (): number => {
         let maxUnlocked = 1;
-        for (const req of GLIFOSCURO_REQUIREMENTS) {
+        for (const req of GLYPHSHADE_REQUIREMENTS) {
             if (currentPoints >= req.requiredPoints) {
                 // Already unlocked with current points
                 maxUnlocked = req.difficulty;
@@ -123,7 +123,7 @@ export function GlifoscuroSection({
     // Find the next difficulty to unlock
     const getNextUnlock = () => {
         const currentMax = getUnlockedDifficulty();
-        const next = GLIFOSCURO_REQUIREMENTS.find(r => r.difficulty === currentMax + 1);
+        const next = GLYPHSHADE_REQUIREMENTS.find(r => r.difficulty === currentMax + 1);
         if (!next) return null;
         const isAlreadyUnlocked = currentPoints >= next.requiredPoints;
         const unlockDate = !isAlreadyUnlocked ? calculateUnlockDate(next.requiredPoints) : null;
@@ -142,7 +142,7 @@ export function GlifoscuroSection({
     // Calculate progress to next level
     const getProgress = (): number => {
         if (!nextUnlock) return 100;
-        const current = GLIFOSCURO_REQUIREMENTS.find(r => r.difficulty === unlockedDifficulty);
+        const current = GLYPHSHADE_REQUIREMENTS.find(r => r.difficulty === unlockedDifficulty);
         if (!current) return 0;
         const start = current.requiredPoints;
         const end = nextUnlock.requiredPoints;
@@ -151,7 +151,7 @@ export function GlifoscuroSection({
     };
 
     return (
-        <section className="glifoscuro-section">
+        <section className="glyphshade-section">
             <div className="section-header">
                 <div>
                     <h2 className="section-title">Glyphshade Requirements</h2>
@@ -159,7 +159,7 @@ export function GlifoscuroSection({
                 </div>
             </div>
 
-            <div className="glifoscuro-content">
+            <div className="glyphshade-content">
                 <div className="unlock-status-card">
                     <div className="unlock-header">
                         <div className="current-unlock">
@@ -207,7 +207,7 @@ export function GlifoscuroSection({
                 </div>
 
                 <div className="difficulties-grid">
-                    {GLIFOSCURO_REQUIREMENTS.map((req) => {
+                    {GLYPHSHADE_REQUIREMENTS.map((req) => {
                         const isCurrentlyUnlocked = currentPoints >= req.requiredPoints;
                         // Show unlock date for difficulties not yet unlocked with current points
                         const unlockDate = !isCurrentlyUnlocked ? calculateUnlockDate(req.requiredPoints) : null;

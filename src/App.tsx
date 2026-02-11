@@ -1,14 +1,16 @@
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { useSupremacyCalc } from './hooks/useSupremacyCalc';
 import { Header } from './components/Header';
-import { ClassificheSection } from './components/ClassificheSection';
-import { MissioniSection } from './components/MissioniSection';
-import { GlifoscuroSection } from './components/GlifoscuroSection';
-import { EventTimer } from './components/EventTimer';
+import { GlyphshadeSection } from './components/GlyphshadeSection';
 import { DAILY_MODES, WEEKLY_MODES, DAILY_MISSIONS } from './data/gameData';
-import { SpeedInsights } from '@vercel/speed-insights/react';
-import { Analytics } from '@vercel/analytics/react';
 import './App.css';
+
+// Lazy-load below-the-fold and non-critical components to improve FCP
+const EventTimer = lazy(() => import('./components/EventTimer').then(m => ({ default: m.EventTimer })));
+const RankingsSection = lazy(() => import('./components/RankingsSection').then(m => ({ default: m.RankingsSection })));
+const MissionsSection = lazy(() => import('./components/MissionsSection').then(m => ({ default: m.MissionsSection })));
+const SpeedInsights = lazy(() => import('@vercel/speed-insights/react').then(m => ({ default: m.SpeedInsights })));
+const Analytics = lazy(() => import('@vercel/analytics/react').then(m => ({ default: m.Analytics })));
 
 export type ProjectionMode = 'event' | 'daily' | 'weekly';
 
@@ -71,12 +73,14 @@ function App() {
           setProjectionMode={setProjectionMode}
         />
 
-        <EventTimer
-          eventEndDate={eventEndDate}
-          onEventEndDateChange={setEventEndDate}
-        />
+        <Suspense fallback={null}>
+          <EventTimer
+            eventEndDate={eventEndDate}
+            onEventEndDateChange={setEventEndDate}
+          />
+        </Suspense>
 
-        <GlifoscuroSection
+        <GlyphshadeSection
           projectedPoints={getProjectedPoints()}
           currentPoints={currentPoints}
           arenaPoints={eventPoints.arenaPoints}
@@ -101,38 +105,40 @@ function App() {
           </label>
         </div>
 
-        <ClassificheSection
-          title="Daily Rankings"
-          subtitle="Points awarded daily based on rank"
-          modes={DAILY_MODES}
-          getRankingValue={getRankingValue}
-          updateRanking={updateRanking}
-          accentColor="#4ecdc4"
-          isArenaClosed={isArenaClosed}
-        />
+        <Suspense fallback={null}>
+          <RankingsSection
+            title="Daily Rankings"
+            subtitle="Points awarded daily based on rank"
+            modes={DAILY_MODES}
+            getRankingValue={getRankingValue}
+            updateRanking={updateRanking}
+            accentColor="#4ecdc4"
+            isArenaClosed={isArenaClosed}
+          />
 
-        <ClassificheSection
-          title="Weekly Rankings"
-          subtitle="Points awarded weekly based on rank"
-          modes={WEEKLY_MODES}
-          getRankingValue={getRankingValue}
-          updateRanking={updateRanking}
-          accentColor="#ff6b6b"
-        />
+          <RankingsSection
+            title="Weekly Rankings"
+            subtitle="Points awarded weekly based on rank"
+            modes={WEEKLY_MODES}
+            getRankingValue={getRankingValue}
+            updateRanking={updateRanking}
+            accentColor="#ff6b6b"
+          />
 
-        <MissioniSection
-          missions={DAILY_MISSIONS}
-          getMissionValue={getMissionValue}
-          updateMission={updateMission}
-        />
-
-
+          <MissionsSection
+            missions={DAILY_MISSIONS}
+            getMissionValue={getMissionValue}
+            updateMission={updateMission}
+          />
+        </Suspense>
 
         <footer className="app-footer">
           <p>Created by Sacrifar • Supremacy Calculator • Data automatically saved in browser</p>
         </footer>
-        <SpeedInsights />
-        <Analytics />
+        <Suspense fallback={null}>
+          <SpeedInsights />
+          <Analytics />
+        </Suspense>
       </div>
     </div>
   );

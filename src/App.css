@@ -43,11 +43,13 @@
   font-weight: 600;
   text-align: center;
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 .guild-size-input::-webkit-outer-spin-button,
 .guild-size-input::-webkit-inner-spin-button {
   -webkit-appearance: none;
+  appearance: none;
   margin: 0;
 }
 
