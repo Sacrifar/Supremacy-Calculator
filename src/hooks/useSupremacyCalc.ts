@@ -15,6 +15,29 @@ interface StoredData {
     eventEndDate?: string; // ISO string for storage
 }
 
+const migrateData = (data: any): StoredData => {
+    // Migrate old Italian IDs to English
+    if (data.rankings) {
+        data.rankings = data.rankings.map((r: any) => {
+            if (r.modeId === 'arena-suprema') return { ...r, modeId: 'supreme-arena' };
+            if (r.modeId === 'regno-onirico') return { ...r, modeId: 'dream-realm' };
+            if (r.modeId === 'duello-onore') return { ...r, modeId: 'honor-duel' };
+            if (r.modeId === 'labirinto-arcano') return { ...r, modeId: 'arcane-labyrinth' };
+            return r;
+        });
+    }
+    if (data.missions) {
+        data.missions = data.missions.map((m: any) => {
+            if (m.missionId === 'mission-arena') return { ...m, missionId: 'mission-supreme-arena' };
+            if (m.missionId === 'mission-regno') return { ...m, missionId: 'mission-dream-realm' };
+            if (m.missionId === 'mission-duello') return { ...m, missionId: 'mission-honor-duel' };
+            if (m.missionId === 'mission-labirinto') return { ...m, missionId: 'mission-arcane-labyrinth' };
+            return m;
+        });
+    }
+    return data as StoredData;
+};
+
 export function useSupremacyCalc() {
     const [guildSize, setGuildSize] = useState(20);
     const [rankings, setRankings] = useState<GuildRankData[]>([]);
@@ -27,7 +50,8 @@ export function useSupremacyCalc() {
         const stored = localStorage.getItem(STORAGE_KEY);
         if (stored) {
             try {
-                const data: StoredData = JSON.parse(stored);
+                const rawData = JSON.parse(stored);
+                const data = migrateData(rawData);
                 setGuildSize(data.guildSize || 20);
                 setRankings(data.rankings || []);
                 setMissions(data.missions || []);
@@ -135,7 +159,7 @@ export function useSupremacyCalc() {
 
         // Calculate daily rankings
         DAILY_MODES.forEach((mode) => {
-            if (mode.id === 'arena-suprema' && isArenaClosed) {
+            if (mode.id === 'supreme-arena' && isArenaClosed) {
                 return;
             }
             dailyRankings += calculateModePoints(mode, (tierIndex) =>
@@ -171,12 +195,12 @@ export function useSupremacyCalc() {
         const weeksRemaining = calculateWeeklyResetsRemaining(eventEndDate);
 
         // Calculate theoretical daily points separately for projection
-        const arenaMode = DAILY_MODES.find(m => m.id === 'arena-suprema');
+        const arenaMode = DAILY_MODES.find(m => m.id === 'supreme-arena');
         const arenaPoints = arenaMode ? calculateModePoints(arenaMode, (tier) => getRankingValue(arenaMode.id, tier)) : 0;
 
         let otherDailyPoints = 0;
         DAILY_MODES.forEach(mode => {
-            if (mode.id !== 'arena-suprema') {
+            if (mode.id !== 'supreme-arena') {
                 otherDailyPoints += calculateModePoints(mode, (tier) => getRankingValue(mode.id, tier));
             }
         });
@@ -243,7 +267,8 @@ export function useSupremacyCalc() {
                 const reader = new FileReader();
                 reader.onload = (event) => {
                     try {
-                        const data: StoredData = JSON.parse(event.target?.result as string);
+                        const rawData = JSON.parse(event.target?.result as string);
+                        const data = migrateData(rawData);
                         if (data.guildSize) setGuildSize(data.guildSize);
                         if (data.rankings) setRankings(data.rankings);
                         if (data.missions) setMissions(data.missions);

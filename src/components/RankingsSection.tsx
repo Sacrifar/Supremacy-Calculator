@@ -67,8 +67,8 @@ export function RankingsSection({
 
             <div className="modes-grid">
                 {modes.map((mode) => (
-                    <div key={mode.id} className={`mode-card ${isArenaClosed && mode.id === 'arena-suprema' ? 'arena-closed' : ''}`}>
-                        {isArenaClosed && mode.id === 'arena-suprema' && (
+                    <div key={mode.id} className={`mode-card ${isArenaClosed && mode.id === 'supreme-arena' ? 'arena-closed' : ''}`}>
+                        {isArenaClosed && mode.id === 'supreme-arena' && (
                             <div className="arena-closed-badge">
                                 🚫 Closed today (Mon/Tue)
                             </div>

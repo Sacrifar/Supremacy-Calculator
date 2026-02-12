@@ -8,7 +8,7 @@ export const EVENT_END_DATE = new Date(Date.UTC(2026, 2, 4, 23, 59, 59)); // Mar
 
 export const DAILY_MODES: GameMode[] = [
     {
-        id: 'arena-suprema',
+        id: 'supreme-arena',
         name: 'Supreme Arena',
         type: 'daily',
         maxPoints: 4140,
@@ -21,7 +21,7 @@ export const DAILY_MODES: GameMode[] = [
         ],
     },
     {
-        id: 'regno-onirico',
+        id: 'dream-realm',
         name: 'Dream Realm',
         type: 'daily',
         maxPoints: 3020,
@@ -37,7 +37,7 @@ export const DAILY_MODES: GameMode[] = [
 
 export const WEEKLY_MODES: GameMode[] = [
     {
-        id: 'duello-onore',
+        id: 'honor-duel',
         name: "Honor Duel",
         type: 'weekly',
         maxPoints: 3600,
@@ -50,7 +50,7 @@ export const WEEKLY_MODES: GameMode[] = [
         ],
     },
     {
-        id: 'labirinto-arcano',
+        id: 'arcane-labyrinth',
         name: 'Arcane Labyrinth',
         type: 'weekly',
         maxPoints: 3600,
@@ -65,10 +65,10 @@ export const WEEKLY_MODES: GameMode[] = [
 ];
 
 export const DAILY_MISSIONS: Mission[] = [
-    { id: 'mission-arena', name: 'Arena / Supreme Arena', points: 80, maxMembers: 20 },
-    { id: 'mission-regno', name: 'Dream Realm', points: 80, maxMembers: 20 },
-    { id: 'mission-duello', name: "Honor Duel", points: 300, maxMembers: 3 },
-    { id: 'mission-labirinto', name: 'Arcane Labyrinth', points: 300, maxMembers: 3 },
+    { id: 'mission-supreme-arena', name: 'Arena / Supreme Arena', points: 80, maxMembers: 20 },
+    { id: 'mission-dream-realm', name: 'Dream Realm', points: 80, maxMembers: 20 },
+    { id: 'mission-honor-duel', name: "Honor Duel", points: 300, maxMembers: 3 },
+    { id: 'mission-arcane-labyrinth', name: 'Arcane Labyrinth', points: 300, maxMembers: 3 },
 ];
 
 export const ALL_MODES = [...DAILY_MODES, ...WEEKLY_MODES];
