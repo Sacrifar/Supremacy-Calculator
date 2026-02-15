@@ -43,7 +43,8 @@ function App() {
   const isArenaClosed = now.getUTCDay() === 1 || now.getUTCDay() === 2;
 
   // Calculate projected points based on projection mode
-  const dailyRate = eventPoints.dailyRankings + eventPoints.dailyMissions;
+  const isSunday = now.getUTCDay() === 0; // Sunday is 0 in UTC
+  const dailyRate = eventPoints.dailyRankings + eventPoints.dailyMissions + (isSunday ? eventPoints.weeklyRankings : 0);
   const weeklyRate = (dailyRate * 7) + eventPoints.weeklyRankings;
 
   const getProjectedPoints = (): number => {

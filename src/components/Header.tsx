@@ -17,11 +17,15 @@ interface HeaderProps {
 export function Header({ points, eventPoints, currentPoints, setCurrentPoints, onReset, onSaveData, onLoadData, projectionMode, setProjectionMode }: HeaderProps) {
 
     const handleAddDailyPoints = () => {
-        const dailyRate = eventPoints.dailyRankings + eventPoints.dailyMissions;
+        const now = new Date();
+        const isSunday = now.getUTCDay() === 0; // Sunday is 0 in UTC
+        const dailyRate = eventPoints.dailyRankings + eventPoints.dailyMissions + (isSunday ? eventPoints.weeklyRankings : 0);
         setCurrentPoints(currentPoints + dailyRate);
     };
 
-    const dailyRate = eventPoints.dailyRankings + eventPoints.dailyMissions;
+    const now = new Date();
+    const isSunday = now.getUTCDay() === 0;
+    const dailyRate = eventPoints.dailyRankings + eventPoints.dailyMissions + (isSunday ? eventPoints.weeklyRankings : 0);
     const weeklyRate = (dailyRate * 7) + eventPoints.weeklyRankings;
 
     const getProjectedValue = () => {
@@ -80,13 +84,20 @@ export function Header({ points, eventPoints, currentPoints, setCurrentPoints, o
                             >ALL</button>
                         </div>
                         {projectionMode === 'daily' && (
-                            <button
-                                className="add-daily-btn"
-                                onClick={handleAddDailyPoints}
-                                title="Add daily projected points to Current Points"
-                            >
-                                ➕ Add to Current
-                            </button>
+                            <>
+                                {isSunday && (
+                                    <span className="weekly-reset-badge" title="Weekly reset included">
+                                        🔄 +Weekly
+                                    </span>
+                                )}
+                                <button
+                                    className="add-daily-btn"
+                                    onClick={handleAddDailyPoints}
+                                    title="Add daily projected points to Current Points"
+                                >
+                                    ➕ Add to Current
+                                </button>
+                            </>
                         )}
                     </div>
                     <div className="total-value">{getProjectedValue().toLocaleString()}</div>
