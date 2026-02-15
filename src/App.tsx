@@ -9,6 +9,7 @@ import './App.css';
 const EventTimer = lazy(() => import('./components/EventTimer').then(m => ({ default: m.EventTimer })));
 const RankingsSection = lazy(() => import('./components/RankingsSection').then(m => ({ default: m.RankingsSection })));
 const MissionsSection = lazy(() => import('./components/MissionsSection').then(m => ({ default: m.MissionsSection })));
+const FAQSection = lazy(() => import('./components/FAQSection').then(m => ({ default: m.FAQSection })));
 const SpeedInsights = lazy(() => import('@vercel/speed-insights/react').then(m => ({ default: m.SpeedInsights })));
 const Analytics = lazy(() => import('@vercel/analytics/react').then(m => ({ default: m.Analytics })));
 
@@ -131,6 +132,10 @@ function App() {
             getMissionValue={getMissionValue}
             updateMission={updateMission}
           />
+        </Suspense>
+
+        <Suspense fallback={null}>
+          <FAQSection />
         </Suspense>
 
         <footer className="app-footer">
